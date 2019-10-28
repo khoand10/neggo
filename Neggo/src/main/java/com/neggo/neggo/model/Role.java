@@ -1,5 +1,6 @@
 package com.neggo.neggo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +20,9 @@ public class Role implements Serializable {
     private Long id;
     private String name;
     private String role;
-    @OneToMany(mappedBy = "role")
-    private List<User> users;
-
+//    @JsonBackReference("roles_users")
+//    @OneToMany(mappedBy = "role")
+//    private List<User> users;
     public Role(String name, String role) {
         this.name = name;
         this.role = role;

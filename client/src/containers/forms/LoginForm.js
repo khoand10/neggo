@@ -40,7 +40,7 @@ let LoginForm = props => {
         <form onSubmit={handleSubmit}>
             <h1>Login</h1>
             <p className="text-muted">Sign In to your account</p>
-            <Field component={renderField} icon="fa fa-user" type="text" label="Username" name="username" />
+            <Field component={renderField} icon="fa fa-user" type="text" label="Email" name="email" />
             <Field component={renderField} icon="fa fa-key" type="password" label="Password" name="password" />
             <Row>
                 <Col xs="6">

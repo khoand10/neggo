@@ -1,5 +1,6 @@
 package com.neggo.neggo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,10 +18,12 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String name;
     private String email;
     private String point;
     private String password;
+//    @JsonBackReference("roles_users")
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

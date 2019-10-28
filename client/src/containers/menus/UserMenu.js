@@ -35,7 +35,7 @@ class UserMenu extends Component {
             <div>
                 <Dropdown nav className="d-md-down-none" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle nav>
-                        <span className="text-avatar bg-info">A</span>
+                        <img src={'assets/img/avatars/6.jpg'} className="img-avatar"/>
                     </DropdownToggle>
                     <DropdownMenu className="dropdown-menu-lg" right>
                         <DropdownItem onClick={this.toggleModel}><i className="fa fa-user"></i>Edit Profile</DropdownItem>
