@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,6 +27,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError("Email already exist"));
         }
         userRepository.save(user);
+        return ResponseEntity.ok(user);
+    }
+
+    @RequestMapping("/{userID}")
+    public ResponseEntity<Object> getUser(@PathVariable(value = "userID") Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError("Can not find user with id: "+id));
+        }
         return ResponseEntity.ok(user);
     }
 

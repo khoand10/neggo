@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Container } from 'reactstrap';
 
 import { someAction } from '../actions/';
+import {getLoginStatus} from '../actions/login';
 
 import {
   AppBreadcrumb,
@@ -26,6 +27,10 @@ import routes from '../config/routes';
 
 class Home extends Component {
   componentWillMount() {
+    const userID = localStorage.getItem("userID");
+    if (userID) {
+      this.props.getLoginStatus(userID);
+    }
     this.props.someAction();
   }
 
@@ -76,7 +81,8 @@ function mapStateToProps({ somedata }) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    someAction
+    someAction,
+    getLoginStatus,
   }, dispatch);
 }
 

@@ -14,7 +14,19 @@ export const login = (value) => {
             email: value.email,
             password: value.password,
         });
-        console.log('rs', rs);
+        if (rs.status === 200) {
+            localStorage.setItem("userID", rs.data.id);
+            dispatch({
+                type: USER_LOGGED_IN,
+                payload: rs.data,
+            });
+        }
+    }
+}
+
+export const getLoginStatus = (userID) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.get(`${API}/api/users/${userID}`);
         if (rs.status === 200) {
             dispatch({
                 type: USER_LOGGED_IN,

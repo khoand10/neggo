@@ -9,21 +9,21 @@ export const someAction = (props) => {
     }
 }
 
-export const login = (props) => {
-    return (dispatch, getState) => {
-        dispatch({
-            type: USER_LOGGED_IN,
-            payload: { username: "Siva", token: "Some Token" }
-        });
-    }
-}
+// export const login = (props) => {
+//     return (dispatch, getState) => {
+//         dispatch({
+//             type: USER_LOGGED_IN,
+//             payload: { username: "Siva", token: "Some Token" }
+//         });
+//     }
+// }
 
-export const logout = (props) => {
-    return (dispatch, getState) => {
-        dispatch({
-            type: USER_LOGGED_OUT,
-            payload: null
-        });
-        toastr.success('Success', 'You clicked login');
-    }
-}
+// export const logout = (props) => {
+//     return (dispatch, getState) => {
+//         dispatch({
+//             type: USER_LOGGED_OUT,
+//             payload: null
+//         });
+//         toastr.success('Success', 'You clicked login');
+//     }
+// }
