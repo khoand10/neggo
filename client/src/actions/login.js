@@ -1,4 +1,5 @@
 import { toastr } from 'react-redux-toastr';
+
 import axios from 'axios'
 import {
     USER_LOGGED_IN,
@@ -13,10 +14,13 @@ export const login = (value) => {
             email: value.email,
             password: value.password,
         });
-        dispatch({
-            type: USER_LOGGED_IN,
-            payload: rs.data,
-        });
+        console.log('rs', rs);
+        if (rs.status === 200) {
+            dispatch({
+                type: USER_LOGGED_IN,
+                payload: rs.data,
+            });
+        }
     }
 }
 
@@ -26,6 +30,6 @@ export const logout = (props) => {
             type: USER_LOGGED_OUT,
             payload: null
         });
-        toastr.success('Success', 'You clicked login');
+        toastr.success('Success', 'Logout success!');
     }
 }

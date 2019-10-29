@@ -14,9 +14,11 @@ class App extends Component {
         <ReduxToastr />
         <BrowserRouter>
           <Switch>
-            {
+            {/* {
               user ? <Route path="/" name="Home" component={Home} /> : <Route path="/" name="Login Page" component={Login} />
-            }
+            } */}
+            <Route path="/login" name="Login" component={Login} />
+            <Route path="/" name="Home" component={Home} />
           </Switch>
         </BrowserRouter>
       </div>

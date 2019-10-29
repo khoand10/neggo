@@ -12,6 +12,11 @@ const Dashboard = Loadable({
   loading: Loading,
 });
 
+// const Login = Loadable({
+//   loader: () => import('../containers/Login'),
+//   loading: Loading,
+// });
+
 const Page1 = Loadable({
   loader: () => import('../containers/views/Page1'),
   loading: Loading,
@@ -25,6 +30,7 @@ const Page2 = Loadable({
 const routes = [
   { path: '/', name: '', component: Home, exact: true },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  // { path: '/login', name: 'Login', component: Login },
   { path: '/page1', name: 'Page1', component: Page1 },
   { path: '/page2', name: 'Page2', component: Page2 }
 ];

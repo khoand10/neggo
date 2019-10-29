@@ -37,9 +37,9 @@ Header.propTypes = propTypes;
 Header.defaultProps = defaultProps;
 
 
-function mapStateToProps({ somedata }) {
+function mapStateToProps({ somedata}) {
   return {
-    somedata
+    somedata,
   };
 }
 
