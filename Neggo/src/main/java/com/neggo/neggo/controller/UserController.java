@@ -1,7 +1,10 @@
 package com.neggo.neggo.controller;
 
 import com.neggo.neggo.controller.error.ApiError;
+import com.neggo.neggo.controller.handle.UserForm;
+import com.neggo.neggo.model.Role;
 import com.neggo.neggo.model.User;
+import com.neggo.neggo.repositories.RoleRepository;
 import com.neggo.neggo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +22,17 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UserForm userForm) {
+        Role role = roleRepository.findByRole(userForm.getRole());
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setRole(role);
         boolean exists = userRepository.existsEmail(user.getEmail());
         if (exists) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError("Email already exist"));

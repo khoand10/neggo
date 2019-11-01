@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { 
+  Button, 
+  Card, CardBody, 
+  CardFooter, 
+  Col, Container, 
+  Form, 
+  Input, 
+  InputGroup, 
+  InputGroupAddon, 
+  InputGroupText, 
+  Row,
+  FormFeedback,
+} from 'reactstrap';
 
 import {createUser} from '../../../actions/user';
 
@@ -9,7 +21,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fallname: '',
+      fullname: '',
       email: '',
       password: '',
       repassword: '',
@@ -29,7 +41,31 @@ class Register extends Component {
       [name]: value,
     });
   }
+
+  createNewUser = async () => {
+    this.setState({submitting: true}, async () => {
+      const {fullname, email, password} = this.state;
+      const newUser = {
+        name: fullname,
+        email: email,
+        password: password,
+        role: 'mem'
+      }
+      try {
+        const rs = await this.props.createUser(newUser);
+        if (rs.status === 200) {
+          this.props.history.push('/login');
+        } else {
+          this.setState({error: true});
+        }
+      } catch (error) {
+        this.setState({error: true});
+      }
+    });
+  }
+
   render() {
+    const {error, submitting} = this.state;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -49,11 +85,12 @@ class Register extends Component {
                       <Input 
                         type="text" 
                         placeholder="Full Name" 
-                        autoComplete="fallname"
-                        name='fallname'
-                        value={this.state.fallname}
+                        autoComplete="fullname"
+                        name='fullname'
+                        value={this.state.fullname}
                       onChange={this.handleChange}
                       />
+                      <FormFeedback valid={'has-danger'}>Sweet! that name is available</FormFeedback>
                     </InputGroup>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -101,9 +138,16 @@ class Register extends Component {
                     <Button
                       color="success"
                       block
+                      onClick={() => this.createNewUser()}
+                      disabled={submitting}
                     >Create Account</Button>
                   </Form>
                 </CardBody>
+                {error ?
+                    <div class="alert alert-danger" role="alert">
+                    Create fail!
+                  </div> : null
+                }
                 <CardFooter className="p-4">
                   <Row>
                     <Col xs="12" sm="6">

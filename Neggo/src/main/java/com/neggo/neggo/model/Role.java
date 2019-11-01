@@ -1,13 +1,7 @@
 package com.neggo.neggo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -27,6 +21,12 @@ public class Role implements Serializable {
     }
 
     public Role(String name, String role) {
+        this.name = name;
+        this.role = role;
+    }
+
+    public Role(Long id, String name, String role) {
+        this.id = id;
         this.name = name;
         this.role = role;
     }
