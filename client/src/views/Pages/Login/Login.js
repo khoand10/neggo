@@ -48,6 +48,11 @@ class Login extends Component {
     });
   }
 
+  onFormSubmit = e => {
+    e.preventDefault();
+    this.login();
+  }
+
   render() {
     const {submitting, error} = this.state;
     return (
@@ -58,7 +63,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <Form>
+                    <Form onSubmit={this.onFormSubmit}>
                       <h1>Login</h1>
                       <p className="text-muted">Sign In to your account</p>
                       <InputGroup className="mb-3">
