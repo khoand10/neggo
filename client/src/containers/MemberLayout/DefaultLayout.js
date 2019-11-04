@@ -7,29 +7,17 @@ import { Container } from 'reactstrap';
 import {logout} from '../../actions/login';
 
 import {
-  AppAside,
   AppFooter,
   AppHeader,
-  AppSidebar,
-  AppSidebarFooter,
-  AppSidebarForm,
-  AppSidebarHeader,
-  AppSidebarMinimizer,
   AppBreadcrumb2 as AppBreadcrumb,
-  AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
-
-import {Card, CardBody, CardFooter, CardHeader, Col, Row, Breadcrumb, BreadcrumbItem, CardImg, CardImgOverlay} from 'reactstrap';
-
 // sidebar nav config
 import navigation from '../../_nav';
 // routes config
-import routes from '../../routes';
+import routes from '../../memberRouters';
 
-const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
-const Breadcrumbs = React.lazy(() => import('../../views/Base/Breadcrumbs'))
 
 class DefaultLayout extends Component {
 
@@ -47,7 +35,6 @@ class DefaultLayout extends Component {
   }
 
   render() {
-    const {course} = this.props;
     return (
       <div className="app">
         <AppHeader fixed>
@@ -56,20 +43,11 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          {/* <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
-            </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar> */}
           <main className="main">
             <AppBreadcrumb appRoutes={routes} router={router}/>
             <Container fluid>
               <Suspense fallback={this.loading()}>
-                {/* <Switch>
+                <Switch>
                   {routes.map((route, idx) => {
                     return route.component ? (
                       <Route
@@ -83,42 +61,10 @@ class DefaultLayout extends Component {
                     ) : (null);
                   })}
                   <Redirect from="/" to="/dashboard" />
-                </Switch> */}
-                <div className="animated fadeIn">
-                <Breadcrumb>
-                  {/*eslint-disable-next-line*/}
-                  <BreadcrumbItem><a href="/">Home</a></BreadcrumbItem>
-                  <BreadcrumbItem active>Library</BreadcrumbItem>
-                </Breadcrumb>
-                  <Row>
-                        {course ? course.map((item, id) => {
-                          return (
-                            <Col xs="12" sm="6" md="4">
-                              <Card>
-                                <CardImg top width="5%" src={item.logo} alt="Card image cap" />
-                                <CardImgOverlay>
-                                  <CardHeader>
-                                    {item.name}
-                                  </CardHeader>
-                                  <CardBody>
-                                  {item.description}
-                                  </CardBody>
-                                </CardImgOverlay>
-                              </Card>
-                            </Col>
-                          )
-                          })
-                        : (null)}
-                  </Row>
-                </div>
+                </Switch>
               </Suspense>
             </Container>
           </main>
-          {/* <AppAside fixed>
-            <Suspense fallback={this.loading()}>
-              <DefaultAside />
-            </Suspense>
-          </AppAside> */}
         </div>
         <AppFooter>
           <Suspense fallback={this.loading()}>
@@ -130,9 +76,8 @@ class DefaultLayout extends Component {
   }
 }
 
-function mapStateToProps({course}) {
+function mapStateToProps({}) {
   return {
-    course
   };
 }
 

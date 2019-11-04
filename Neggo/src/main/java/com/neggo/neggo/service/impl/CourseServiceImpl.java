@@ -23,4 +23,9 @@ public class CourseServiceImpl implements CourseService {
     public void create(Course course) {
         courseRepository.save(course);
     }
+
+    @Override
+    public Course getByID(Long id) {
+        return courseRepository.findByCourseID(id);
+    }
 }

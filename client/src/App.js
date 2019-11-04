@@ -32,7 +32,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('role ', this.props.role);
     return (
       <HashRouter>
           <React.Suspense fallback={loading()}>

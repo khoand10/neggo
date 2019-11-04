@@ -2,6 +2,9 @@ package com.neggo.neggo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -17,6 +20,8 @@ public class Course implements Serializable {
     @Lob
     private String courseInfo;
     private String logo;
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private Set<Module> modules = new HashSet<>();
 
     public Course() {
     }
@@ -26,18 +31,6 @@ public class Course implements Serializable {
         this.description = description;
         this.courseInfo = courseInfo;
         this.logo = logo;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -72,6 +65,26 @@ public class Course implements Serializable {
         this.logo = logo;
     }
 
+    public Set<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<Module> modules) {
+        this.modules = modules;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -80,6 +93,7 @@ public class Course implements Serializable {
                 ", description='" + description + '\'' +
                 ", courseInfo='" + courseInfo + '\'' +
                 ", logo='" + logo + '\'' +
+                ", modules=" + modules +
                 '}';
     }
 }
