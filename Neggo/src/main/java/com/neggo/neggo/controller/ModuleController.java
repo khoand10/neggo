@@ -33,6 +33,7 @@ public class ModuleController {
         return ResponseEntity.ok(module);
     }
 
+    @RequestMapping
     public ResponseEntity<List<Module>> listModules() {
         List<Module> modules = moduleService.findAll();
         return ResponseEntity.ok(modules);

@@ -22,7 +22,9 @@ class Home extends Component {
                     <CardText>
                         {item.description}
                     </CardText>
-                        <Button>More</Button>
+                        <Button
+                          onClick={() => this.props.history.push(`/course/${item.id}`)}
+                        >More</Button>
                     </CardBody>
                     <CardFooter>
                         <Button color="primary" outline>
