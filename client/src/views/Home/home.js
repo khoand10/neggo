@@ -27,12 +27,26 @@ class Home extends Component {
                         >More</Button>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary" outline>
+                      <Row>
+                        <Col sm={4}>
+                            <div class="callout callout-info">
+                              <small class="text-muted">Lessions</small><br/>
+                              <strong class="h4">9,123</strong>
+                            </div>
+                        </Col>
+                        <Col sm={4}>
+                            <div class="callout callout-info">
+                              <small class="text-muted">Quizzes</small><br/>
+                              <strong class="h4">257</strong>
+                            </div>
+                        </Col>
+                      </Row>
+                        {/* <Button color="primary" outline>
                         Lessions <Badge color="secondary">92</Badge>
                         </Button>
                         <Button color="primary" outline>
                         Quizzes <Badge color="secondary">257</Badge>
-                        </Button>
+                        </Button> */}
                     </CardFooter>
                     </Card>
                 </Col>
