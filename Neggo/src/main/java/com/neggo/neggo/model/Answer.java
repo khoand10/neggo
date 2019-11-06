@@ -8,31 +8,22 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "parts")
+@Table(name = "answers")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Part implements Serializable {
+public class Answer implements Serializable {
     private static final long serialVersionUID = -297553281792804396L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    @Lob
     private String content;
-    private boolean type;
-
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "lession_id", foreignKey = @ForeignKey(name = "FK_part_lession_id"))
+    @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "FK_answer_question_id"))
     @JsonBackReference
-    private Lession lession;
-
-    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
-    private Set<Question> questions = new HashSet<>();
+    private Question question;
 }

@@ -1,5 +1,6 @@
 package com.neggo.neggo.controller.handle;
 
+import com.neggo.neggo.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,10 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessionForm {
+public class PartForm {
     private String name;
-    private Long moduleID;
+    private boolean type;
+    private String content;
+    private Long lessionID;
     private QuestionForm questionForm;
 }

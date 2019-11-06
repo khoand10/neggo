@@ -12,27 +12,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "parts")
+@Table(name = "questions")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Part implements Serializable {
+public class Question implements Serializable {
     private static final long serialVersionUID = -297553281792804396L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @Lob
-    private String content;
-    private boolean type;
+    private Long[] answerCorrects;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "lession_id", foreignKey = @ForeignKey(name = "FK_part_lession_id"))
+    @JoinColumn(name = "part_id", foreignKey = @ForeignKey(name = "FK_question_part_id"))
     @JsonBackReference
-    private Lession lession;
+    private Part part;
 
-    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
-    private Set<Question> questions = new HashSet<>();
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private Set<Answer> answers = new HashSet<>();
 }

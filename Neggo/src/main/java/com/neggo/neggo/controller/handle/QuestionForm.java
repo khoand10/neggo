@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessionForm {
+public class QuestionForm {
     private String name;
-    private Long moduleID;
-    private QuestionForm questionForm;
+    private List<AnswerForm> answerForms = new ArrayList<>();
 }

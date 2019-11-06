@@ -24,7 +24,7 @@ public class Lession implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "lession", fetch = FetchType.LAZY)
     private Set<Part> parts = new HashSet<>();
 
     @ManyToOne(fetch=FetchType.LAZY)

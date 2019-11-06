@@ -23,4 +23,9 @@ public class LessionServiceImpl implements LessionService {
     public void create(Lession lession) {
         lessionRepository.save(lession);
     }
+
+    @Override
+    public Lession findByID(Long id) {
+        return lessionRepository.findByLessionID(id);
+    }
 }

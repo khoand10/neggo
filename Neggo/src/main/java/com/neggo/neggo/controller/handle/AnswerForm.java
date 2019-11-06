@@ -9,8 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LessionForm {
-    private String name;
-    private Long moduleID;
-    private QuestionForm questionForm;
+public class AnswerForm {
+    private String content;
 }
