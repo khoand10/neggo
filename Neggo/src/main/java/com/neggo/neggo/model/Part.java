@@ -22,6 +22,7 @@ public class Part implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private boolean type;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "part_id", foreignKey = @ForeignKey(name = "FK_module_part_id"))

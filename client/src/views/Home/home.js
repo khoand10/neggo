@@ -6,14 +6,25 @@ import {Card, CardBody, CardFooter, CardHeader, Col, Row, Button, Badge, CardTex
 
 class Home extends Component {
 
+  getTotalLession = (module) => {
+    console.log('trace', module);
+    let totalLession = 0;
+    for (let i = 0; i < module.length; i++) {
+      const element = module[i];
+      totalLession += element.lessions.length;      
+    }
+    return totalLession;
+  }
+
   render() {
     const {course} = this.props;
     return (
       
         <Row>
             {course ? course.map((item, id) => {
+                const totalLession = this.getTotalLession(item.modules);
                 return (
-                <Col xs="12" sm="6" md="4">
+                <Col xs="12" md="7" sm="6" md="4">
                     <Card>
                     <CardHeader>
                         {item.name}
@@ -31,7 +42,7 @@ class Home extends Component {
                         <Col sm={4}>
                             <div class="callout callout-info">
                               <small class="text-muted">Lessions</small><br/>
-                              <strong class="h4">9,123</strong>
+                              <strong class="h4">{totalLession}</strong>
                             </div>
                         </Col>
                         <Col sm={4}>
