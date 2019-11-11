@@ -52,12 +52,6 @@ class Home extends Component {
                             </div>
                         </Col>
                       </Row>
-                        {/* <Button color="primary" outline>
-                        Lessions <Badge color="secondary">92</Badge>
-                        </Button>
-                        <Button color="primary" outline>
-                        Quizzes <Badge color="secondary">257</Badge>
-                        </Button> */}
                     </CardFooter>
                     </Card>
                 </Col>

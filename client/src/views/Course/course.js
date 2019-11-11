@@ -24,6 +24,31 @@ class Course extends Component {
                 <Markdown source={currentCourse.courseInfo} />
               </Col>
             </Row>
+            {/* <Row className="list-lession">
+              {currentCourse && currentCourse.modules.map((item, index) => {
+                return (
+                  <ListGroup>
+                    <ListGroupItem active tag="button" action>{item.name}</ListGroupItem>
+                    {item.lessions.map((lession, index) => {
+                      return (
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          onClick={() => this.props.history.push(`/lession/${currentCourse.id}/${item.id}/${lession.id}`)}
+                        >{lession.name}</ListGroupItem>
+                      );
+                    })}
+                  </ListGroup>
+                );
+              })}
+            </Row> */}
+          </Col>
+        </Row>
+        <Row>
+          <Col
+              md={6}
+              className='course-info'
+          >
             <Row className="list-lession">
               {currentCourse && currentCourse.modules.map((item, index) => {
                 return (
@@ -34,6 +59,7 @@ class Course extends Component {
                         <ListGroupItem
                           tag="button"
                           action
+                          onClick={() => this.props.history.push(`/lession/${currentCourse.id}/${item.id}/${lession.id}`)}
                         >{lession.name}</ListGroupItem>
                       );
                     })}
@@ -51,7 +77,7 @@ class Course extends Component {
               </ListGroup> */}
             </Row>
           </Col>
-        </Row>
+          </Row>
       </div>
     );
   }
