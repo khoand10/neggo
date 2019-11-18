@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LessionForm {
     private String name;
+    private int order;
     private Long moduleID;
     private QuestionForm questionForm;
 }

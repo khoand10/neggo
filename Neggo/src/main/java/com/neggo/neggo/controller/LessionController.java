@@ -29,14 +29,21 @@ public class LessionController {
         return new ResponseEntity<>(lessions, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Lession> createLession(@Valid @RequestBody LessionForm lessionForm) {
-        Module module = moduleService.findByID(lessionForm.getModuleID());
-        Lession lession = new Lession();
-        lession.setName(lessionForm.getName());
-        lession.setModule(module);
-        lessionService.create(lession);
-        return new ResponseEntity<>(lession, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//    public ResponseEntity<List<Lession>> listLessionByModule(@PathVariable Long id) {
+//        List<Lession> lessions = lessionService.findByModuleID(id);
+//        return new ResponseEntity<>(lessions, HttpStatus.OK);
+//    }
+
+//    @PostMapping
+//    public ResponseEntity<Lession> createLession(@Valid @RequestBody LessionForm lessionForm) {
+//        Module module = moduleService.findByID(lessionForm.getModuleID());
+//        Lession lession = new Lession();
+//        lession.setName(lessionForm.getName());
+//        lession.setOrder(lessionForm.getOrder());
+//        lession.setModule(module);
+//        lessionService.create(lession);
+//        return new ResponseEntity<>(lession, HttpStatus.OK);
+//    }
 
 }

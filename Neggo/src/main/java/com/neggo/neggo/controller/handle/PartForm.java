@@ -14,6 +14,7 @@ public class PartForm {
     private String name;
     private boolean type;
     private String content;
+    private int order;
     private Long lessionID;
     private QuestionForm questionForm;
 }

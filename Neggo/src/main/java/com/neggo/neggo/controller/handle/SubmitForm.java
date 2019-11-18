@@ -5,15 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionForm {
-    private String name;
-    private boolean isMulti;
-    private List<AnswerForm> answerForms = new ArrayList<>();
+public class SubmitForm {
+    private List<Long> answers;
 }

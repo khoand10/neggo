@@ -8,4 +8,5 @@ public interface LessionService {
     List<Lession> getAll();
     void create(Lession lession);
     Lession findByID(Long id);
+//    List<Lession> findByModuleID(Long id);
 }

@@ -1,4 +1,4 @@
-package com.neggo.neggo.controller.handle;
+package com.neggo.neggo.controller.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModuleForm {
-    private String name;
-    private Long courseID;
-    private int order;
+public class AnswerResponse {
+    private boolean correct;
 }

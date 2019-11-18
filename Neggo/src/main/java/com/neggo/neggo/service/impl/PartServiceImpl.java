@@ -34,7 +34,7 @@ public class PartServiceImpl implements PartService {
             part.setName(partForm.getName());
             part.setContent(partForm.getContent());
             part.setType(false);
-            part.setLession(lessionService.findByID(partForm.getLessionID()));
+            part.setLessionID(partForm.getLessionID());
             partRepository.save(part);
         } else {
             part.setType(true);
@@ -42,6 +42,7 @@ public class PartServiceImpl implements PartService {
             Part newPart = partRepository.save(part);
             Question question = new Question();
             question.setName(partForm.getQuestionForm().getName());
+            question.setMulti(partForm.getQuestionForm().isMulti());
             question.setPart(newPart);
             // 2
             Question newQuestion = questionService.create(question);
@@ -54,5 +55,10 @@ public class PartServiceImpl implements PartService {
             }
         }
         return part;
+    }
+
+    @Override
+    public List<Part> findByLessionID(Long id) {
+        return partRepository.findBylessionID(id);
     }
 }

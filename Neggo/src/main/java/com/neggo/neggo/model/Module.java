@@ -21,6 +21,7 @@ public class Module implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private int order;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "FK_module_course_id"))

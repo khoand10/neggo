@@ -29,6 +29,7 @@ public class ModuleController {
         Module module = new Module();
         module.setName(moduleForm.getName());
         module.setCourse(course);
+        module.setOrder(moduleForm.getOrder());
         moduleService.createModule(module);
         return ResponseEntity.ok(module);
     }

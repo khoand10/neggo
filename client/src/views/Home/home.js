@@ -22,7 +22,8 @@ class Home extends Component {
       
         <Row>
             {course ? course.map((item, id) => {
-                const totalLession = this.getTotalLession(item.modules);
+                // const totalLession = this.getTotalLession(item.modules);
+                const totalLession = 10;
                 return (
                 <Col xs="12" md="7" sm="6" md="4">
                     <Card>

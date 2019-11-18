@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/parts")
@@ -22,7 +23,7 @@ public class PartController {
     private LessionService lessionService;
 
     @PostMapping
-    public ResponseEntity<Part> createCourse(@Valid @RequestBody PartForm partForm) {
+    public ResponseEntity<Part> createPart(@Valid @RequestBody PartForm partForm) {
 //        Part part = new Part();
 //        if (partForm.isType() == false) {
 //            part.setName(partForm.getName());
@@ -35,6 +36,12 @@ public class PartController {
 //        }
         Part part = partService.create(partForm);
         return new ResponseEntity<>(part, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Part>> listPartByLession(@PathVariable Long id) {
+        List<Part> parts = partService.findByLessionID(id);
+        return new ResponseEntity<>(parts, HttpStatus.OK);
     }
 
 }

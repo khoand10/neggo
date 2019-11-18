@@ -12,24 +12,29 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "lessions")
-@Setter@Getter
+@Table(name = "answer_correct")
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lession implements Serializable {
+public class AnswerCorrect implements Serializable {
     private static final long serialVersionUID = -297553281792804396L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private int order;
-
-//    @OneToMany(mappedBy = "lession", fetch = FetchType.LAZY)
-//    private Set<Part> parts = new HashSet<>();
-
+    private Long answerCorrect;
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "module_id", foreignKey = @ForeignKey(name = "FK_lession_module_id"))
+    @JoinColumn(name = "question_id", foreignKey = @ForeignKey(name = "FK_answer_correct_question_id"))
     @JsonBackReference
-    private Module module;
+    private Question question;
+
+    @Override
+    public String toString() {
+        return "AnswerCorrect{" +
+                "id=" + id +
+                ", answerCorrect=" + answerCorrect +
+                ", question=" + question +
+                '}';
+    }
 }

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
+import {compare} from '../../utils/helper';
 const Markdown = require('react-markdown');
 
 class Course extends Component {
 
   render() {
     const {currentCourse} = this.props;
+    const modules = currentCourse.modules.sort(compare);
     return (
       <div class="container-fluid">
         <Row>
@@ -24,12 +26,13 @@ class Course extends Component {
                 <Markdown source={currentCourse.courseInfo} />
               </Col>
             </Row>
-            {/* <Row className="list-lession">
+            <Row className="list-lession">
               {currentCourse && currentCourse.modules.map((item, index) => {
+                const lessions = item.lessions.sort(compare);
                 return (
                   <ListGroup>
                     <ListGroupItem active tag="button" action>{item.name}</ListGroupItem>
-                    {item.lessions.map((lession, index) => {
+                    {lessions.map((lession, index) => {
                       return (
                         <ListGroupItem
                           tag="button"
@@ -41,43 +44,35 @@ class Course extends Component {
                   </ListGroup>
                 );
               })}
-            </Row> */}
+            </Row>
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col
               md={6}
               className='course-info'
           >
             <Row className="list-lession">
-              {currentCourse && currentCourse.modules.map((item, index) => {
+              {modules.map((item, index) => {
+                const lessions = item.lessions.sort(compare);
                 return (
                   <ListGroup>
                     <ListGroupItem active tag="button" action>{item.name}</ListGroupItem>
-                    {item.lessions.map((lession, index) => {
+                    {lessions.map((lession, index) => {
                       return (
                         <ListGroupItem
                           tag="button"
                           action
-                          onClick={() => this.props.history.push(`/lession/${currentCourse.id}/${item.id}/${lession.id}`)}
+                          onClick={() => this.props.history.push(`/lession/${lession.id}`)}
                         >{lession.name}</ListGroupItem>
                       );
                     })}
                   </ListGroup>
                 );
               })}
-              {/* <ListGroup>
-                <ListGroupItem active tag="button" action>Cras justo odio</ListGroupItem>
-                <ListGroupItem
-                  tag="button"
-                  action
-                  onClick={() => alert("Hello")}
-                >aaaaaaa</ListGroupItem>
-                <ListGroupItem>bbbbbbb</ListGroupItem>
-              </ListGroup> */}
             </Row>
           </Col>
-          </Row>
+          </Row> */}
       </div>
     );
   }
