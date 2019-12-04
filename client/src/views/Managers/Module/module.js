@@ -6,7 +6,7 @@ import {Form, Row, Col, Label, Input, CustomInput, Button, Table, Collapse, Card
 
 import {createCourse} from '../../../actions/course';
 
-class CourseDetail extends Component {
+class Module extends Component {
 
   constructor() {
     super();
@@ -115,7 +115,7 @@ class CourseDetail extends Component {
                       size="lg"
                       block={true}
                       outline={true}
-                    >{'Modules of course'}</Button>
+                    >{'Modules of course XXX'}</Button>
                     <Collapse isOpen={this.state.isOpen}>
                       <Card>
                         <CardBody>
@@ -176,7 +176,7 @@ class CourseDetail extends Component {
 }
 
 function mapStateToProps({course}, ownProps) {
-    const courseID = ownProps.match.params.courseID;
+    const {moduleID, courseID} = ownProps.match.params;
     const currentCourse = course.find((c) => c.id == courseID);
     return {
         currentCourse
@@ -189,4 +189,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default (connect(mapStateToProps, mapDispatchToProps)(CourseDetail));
+export default (connect(mapStateToProps, mapDispatchToProps)(Module));
