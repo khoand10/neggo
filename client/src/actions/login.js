@@ -5,6 +5,7 @@ import {
     USER_LOGGED_IN,
     USER_LOGGED_OUT,
     API,
+    SET_HISTORY,
 } from './action_types';
 
 
@@ -20,6 +21,16 @@ export const login = (email, password) => {
                 type: USER_LOGGED_IN,
                 payload: rs.data,
             });
+            let history;
+            try {
+                history = JSON.parse(rs.data.history)
+            } catch (error) {
+                history = {};
+            }
+            dispatch({
+                type: SET_HISTORY,
+                payload: history,
+            });
         }
         return rs;
     }
@@ -32,6 +43,16 @@ export const getLoginStatus = (userID) => {
             dispatch({
                 type: USER_LOGGED_IN,
                 payload: rs.data,
+            });
+            let history;
+            try {
+                history = JSON.parse(rs.data.history)
+            } catch (error) {
+                history = {};
+            }
+            dispatch({
+                type: SET_HISTORY,
+                payload: history,
             });
         }
     }

@@ -1,12 +1,11 @@
-import {
-    USER_GET_ALL
-} from '../actions/action_types';
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../actions';
 
 export default function (state = null, action) {
-    let newUser;
     switch (action.type) {
-        case USER_GET_ALL:
+        case USER_LOGGED_IN:
             return action.payload;
+        case USER_LOGGED_OUT:
+            return null;
         default:
             return state;
     }

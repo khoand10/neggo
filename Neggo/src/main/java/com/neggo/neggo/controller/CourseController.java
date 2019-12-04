@@ -1,5 +1,6 @@
 package com.neggo.neggo.controller;
 
+import com.neggo.neggo.controller.handle.ChangeStatusForm;
 import com.neggo.neggo.model.Course;
 import com.neggo.neggo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,11 @@ public class CourseController {
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/change-status")
+    public ResponseEntity<Course>changeStatusCourses(@Valid @RequestBody ChangeStatusForm changeStatusForm) {
+        Course course = courseService.getByID(changeStatusForm.getCourseID());
+        course.setActive(changeStatusForm.isActive());
+        Course newCourse = courseService.create(course);
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Form, FormGroup, Input, Label, Button, Alert} from 'reactstrap';
-import { ToastContainer, toast } from 'react-toastify';
 
 import { submit } from '../../actions/index';
 
@@ -39,33 +38,38 @@ class Quiz extends Component {
             let answers = [];
             answers.push(this.state.answer);
             const rs = await this.props.submit(question.id, answers);
-            console.log("nhan duoc", rs);
             if (rs.status === 200) {
-                this.setState({
-                    rs: rs.data.correct,
-                });
+                if (rs.data.correct === true) {
+                    this.setState({
+                        correct: true,
+                    });
+                } else {
+                    this.setState({
+                        incorrect: true,
+                    });
+                }
+                setTimeout(() => {
+                    this.setState({correct: false, incorrect: false})
+                }, 3000);
                 return;
             }
-            this.setState({rs: false});
+            this.setState({
+                incorrect: true,
+            });
         } catch (error) {
-            this.setState({rs: false});
+            this.setState({
+                incorrect: true,
+            });
         }
+        setTimeout(() => {
+            this.setState({correct: false, incorrect: false})
+        }, 3000);
     }
 
     renderQuestion() {
-        console.log('state ', this.state.rs);
         const {question} = this.props;
         const {answers} = question;
-        let fail = (
-            <Alert color="danger">
-                Answer incorrect!
-            </Alert>
-        )
-        let success = (
-            <Alert color="success">
-                Correct!
-            </Alert>
-        )
+        console.log('state ', this.setState.incorrect);
         return (
             <React.Fragment>
                 <h3>{question.name}</h3>
@@ -87,17 +91,16 @@ class Quiz extends Component {
                             );
                         })}
                         </FormGroup>
-                        {/* {this.state.rs && this.state.rs == true &&
+                        {this.state.correct && this.state.correct == true &&
                             <Alert color="success">
                                 Correct!
                             </Alert>
                         }
-                        {this.state.rs && this.state.rs == false &&
+                        {this.state.incorrect && this.state.incorrect == true &&
                             <Alert color="danger">
                                 Answer incorrect!
                             </Alert>
-                        } */}
-                        {this.state.rs ? this.state.rs == true ? success : fail : null}
+                        }
                         <Button
                             color="primary"
                             onClick={() => this.submit()}

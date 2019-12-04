@@ -1,6 +1,7 @@
 package com.neggo.neggo.controller;
 
 import com.neggo.neggo.controller.error.ApiError;
+import com.neggo.neggo.controller.handle.HistoryForm;
 import com.neggo.neggo.controller.handle.UserForm;
 import com.neggo.neggo.model.Role;
 import com.neggo.neggo.model.User;
@@ -54,5 +55,14 @@ public class UserController {
     public ResponseEntity<List<User>> listUser() {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update-history", method = RequestMethod.POST)
+    public ResponseEntity<User> updateHistory(@RequestBody HistoryForm history) {
+        System.out.println("debug "+history.getUserID());
+        User user = userRepository.getOne(history.getUserID());
+        user.setHistory(history.getHistory());
+        User newUser = userRepository.save(user);
+        return ResponseEntity.ok(newUser);
     }
 }

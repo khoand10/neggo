@@ -20,6 +20,17 @@ export const submit = (questionID, answers) => {
         {
             answers
         });
+        if (rs.data.correct === true) {
+            toastr.success('Success', 'Correct!');
+        } else {
+            toastr.error('Answer incorrect!');
+        }
         return rs;
+    }
+}
+
+export const updateHistory = (userID, history) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.post(`${API}/api/users/update-history`)
     }
 }

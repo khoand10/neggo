@@ -6,12 +6,14 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import {getLoginStatus} from './actions/login';
 import {getAllCourses} from './actions/course';
+import {getAllUser} from './actions/user';
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
-const MemberLayout = React.lazy(() => import('./containers/MemberLayout'))
+const MemberLayout = React.lazy(() => import('./containers/MemberLayout'));
+const ManagerLayout = React.lazy(() => import('./containers/ManagerLayout'));
 
 // Pages
 const Login = React.lazy(() => import('./views/Pages/Login'));
@@ -29,6 +31,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.getAllCourses();
+    this.props.getAllUser();
   }
 
   render() {
@@ -41,8 +44,11 @@ class App extends Component {
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
               {this.props.role === 'mem' ? 
-                <Route path="/" name="Home" render={props => <MemberLayout {...props}/>} /> :
+                <Route path="/" name="Home" render={props => <MemberLayout {...props}/>} /> : 
+                (this.props.role === 'man' ? 
+                <Route path="/" name="Home" render={props => <ManagerLayout {...props}/>} /> :
                 <Route path="/" name="Home" render={props => <DefaultLayout {...props}/>} />
+                )
               }
             </Switch>
           </React.Suspense>
@@ -66,6 +72,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getLoginStatus,
     getAllCourses,
+    getAllUser,
   }, dispatch);
 }
 

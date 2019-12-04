@@ -29,6 +29,7 @@ public class Course implements Serializable {
     @Lob
     private String courseInfo;
     private String logo;
+    private boolean active;
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private Set<Module> modules = new HashSet<>();
 }

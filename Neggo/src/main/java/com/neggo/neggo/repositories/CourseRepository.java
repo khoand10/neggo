@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT t FROM Course t WHERE t.id = ?1")
     Course findByCourseID(Long id);
+
 }

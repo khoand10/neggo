@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {Row, Col, Badge, ButtonGroup, Button} from 'reactstrap';
+import {Row, Col, Badge, ButtonGroup, Button, Nav, NavLink, NavItem, TabContent} from 'reactstrap';
 import {compare} from '../../utils/helper';
 import Quiz from '../Quiz/quiz';
 
 import {getPartByLessionID} from'../../actions/part';
+import classnames from 'classnames';
 
 const Markdown = require('react-markdown');
 
@@ -43,16 +44,21 @@ class Lession extends Component {
     );
   }
 
+  toggle = tab => {
+      const {currentIndexPart} = this.state;
+    if(currentIndexPart !== tab) {
+        this.setState({currentIndexPart: tab});
+    }
+  }
+
   render() {
     const {currentCourse, currentModule, currentLession} = this.props;
     const {currentIndexPart, currentPart} = this.state;
     const parts = currentPart.sort(compare);
     const currentFirstPart = parts[currentIndexPart];
-    console.log('parts' , parts, currentPart);
     if (!currentFirstPart) {
         return null;
     }
-    console.log('curr', currentFirstPart);
     
     return (
         <div class="container-fluid">
@@ -70,22 +76,33 @@ class Lession extends Component {
                     md={7}
                     className='course-info'
                 >
-                    {parts.map((item, index) => {
-                        if (item.type === true) {
-                            return (
-                                <Button
-                                    onClick={() => this.setState({currentIndexPart: index})}
-                                >Quiz</Button>
-                            );
-                        } else {
-                            return (
-                                <Button
-                                    onClick={() => this.setState({currentIndexPart: index})}
-                                >Doc</Button>
-                            );
-                        }
-                    })}
-                    {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
+                    <Nav tabs>
+                        {parts.map((item, index) => {
+                            if (item.type === true) {
+                                return (
+                                    <NavItem>
+                                        <NavLink
+                                            className={classnames({ active: currentIndexPart === index})}
+                                            onClick={() => this.toggle(index)}
+                                        >
+                                        Quiz</NavLink>
+                                    </NavItem>
+                                );
+                            } else {
+                                return (
+                                    <NavItem>
+                                        <NavLink
+                                        className={classnames({ active: currentIndexPart === index})}
+                                        onClick={() => this.toggle(index)}
+                                    >Theory</NavLink>
+                                    </NavItem>
+                                );
+                            }
+                        })}
+                        <TabContent activeTab={currentIndexPart}>
+                            {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
+                        </TabContent>
+                    </Nav>
                 </Col>
             </Row>
         </div>

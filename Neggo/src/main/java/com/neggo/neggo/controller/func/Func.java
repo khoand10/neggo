@@ -5,7 +5,6 @@ import com.neggo.neggo.model.AnswerCorrect;
 import com.neggo.neggo.model.Question;
 
 import java.util.List;
-import java.util.Set;
 
 public class Func {
     public static boolean handeSubmit(Question question, SubmitForm submitForm) {
@@ -19,7 +18,6 @@ public class Func {
             }
             return true;
         } else {
-            System.out.println("rs id "+ answerCorrects.get(0).getAnswerCorrect());
             if (submitForm.getAnswers().get(0) == answerCorrects.get(0).getAnswerCorrect()) {
                 return true;
             }

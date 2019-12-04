@@ -16,7 +16,6 @@ class Login extends Component {
       submitting: false,
       error: false,
     };
-
     this.handleChange = this.handleChange.bind(this);
   }
 

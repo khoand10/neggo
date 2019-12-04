@@ -7,7 +7,6 @@ import {Card, CardBody, CardFooter, CardHeader, Col, Row, Button, Badge, CardTex
 class Home extends Component {
 
   getTotalLession = (module) => {
-    console.log('trace', module);
     let totalLession = 0;
     for (let i = 0; i < module.length; i++) {
       const element = module[i];
