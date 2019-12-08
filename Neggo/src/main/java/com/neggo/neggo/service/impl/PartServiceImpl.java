@@ -12,7 +12,6 @@ import com.neggo.neggo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,5 +59,10 @@ public class PartServiceImpl implements PartService {
     @Override
     public List<Part> findByLessionID(Long id) {
         return partRepository.findBylessionID(id);
+    }
+
+    @Override
+    public List<Part> findAll() {
+        return partRepository.findAll();
     }
 }

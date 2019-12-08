@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {Form, Row, Col, Label, Input, CustomInput, Button, Table, Collapse, CardBody, Card} from 'reactstrap';
+import {Form, Row, Col, Label, Input, CustomInput, Button, Table, Collapse, CardBody, Card,
+  Modal, ModalHeader, ModalBody, ModalFooter
+} from 'reactstrap';
 
-import {createCourse} from '../../../actions/course';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+import {createCourse, createModule, deleteModule, updateModule} from '../../../actions/course';
+
+import {compare} from '../../../utils/helper';
 
 class CourseDetail extends Component {
 
@@ -18,6 +25,11 @@ class CourseDetail extends Component {
       active: null,
       error: false,
       isOpen: false,
+      newModuleName: '',
+      moduleEditing: {},
+      moduleNameEditing: '',
+      moduleSlotEditing: '',
+      modal: false,
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -70,8 +82,90 @@ class CourseDetail extends Component {
     this.setState({isOpen :!this.state.isOpen});
   }
 
+  createModule = async () => {
+    const slot = this.props.currentCourse.modules ? this.props.currentCourse.modules.length + 1 : 1;
+    const newModule = {
+      name: this.state.newModuleName,
+      courseID: this.props.currentCourse.id,
+      slot,
+    }
+    try {
+      const rs = await this.props.createModule(newModule);
+      if (rs.status === 200) {
+        this.setState({newModuleName: ''});
+      } else {
+      }
+    } catch (error) {
+    }
+  }
+
+  deleteModule = (moduleID) => {
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: 'Are you sure to delete this module.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            this.props.deleteModule(moduleID, this.props.currentCourse.id)
+          }
+        },
+        {
+          label: 'No',
+        }
+      ]
+    });
+  }
+
+  toggleModalUpdate = () => {
+    this.setState({modal: !this.state.modal});
+  }
+
+  closeModal = () => {
+    this.setState({
+      modal: false,
+      moduleEditing: {},
+      moduleNameEditing: '',
+      moduleSlotEditing: '',
+    });
+  }
+
+  openModalUpdate = (item) => {
+    this.setState({
+      modal: true,
+      moduleEditing: item,
+      moduleNameEditing: item.name,
+      moduleSlotEditing: item.slot,
+    });
+  }
+
+  updateModule = async () => {
+    const newModule = {
+      id: this.state.moduleEditing.id,
+      name: this.state.moduleNameEditing,
+      courseID: this.props.currentCourse.id,
+      slot: this.state.moduleSlotEditing,
+    }
+    try {
+      const rs = await this.props.updateModule(newModule);
+      if (rs.status === 200) {
+        this.setState({
+          modal: false,
+          moduleEditing: {},
+          moduleNameEditing: '',
+          moduleSlotEditing: '',
+        });
+      } else {
+      }
+    } catch (error) {
+    }
+  }
+
   render() {
     const {currentCourse} = this.props;
+    if (currentCourse && currentCourse.modules) {
+      currentCourse.modules.sort(compare);
+    }
     return (
       <div class="container-fluid course-detail">
           <Form>
@@ -99,6 +193,19 @@ class CourseDetail extends Component {
                 <Input onChange={this.handleChange} type="text" name="logo" id="logo" placeholder="course logo url" value={this.state.logo} />
               </Col>
             </Row>
+            <Modal isOpen={this.state.modal} toggle={() => this.toggleModalUpdate()}>
+              <ModalHeader toggle={() => this.toggleModalUpdate()}>Update module</ModalHeader>
+              <ModalBody>
+                  <Label for="md-module-name">Name</Label>
+                  <Input type="textarea" placeholder="module name" name="moduleNameEditing" onChange={this.handleChange} rows={1} value={this.state.moduleNameEditing} />
+                  <Label for="md-module-slot">Slot</Label>
+                  <Input type="textarea" placeholder="module slot" name="moduleSlotEditing" onChange={this.handleChange} rows={1} value={this.state.moduleSlotEditing} />
+              </ModalBody>
+              <ModalFooter>
+                  <Button color="primary" onClick={() => this.updateModule()}>Update</Button>{' '}
+                  <Button color="secondary" onClick={() => this.closeModal()}>Cancel</Button>
+              </ModalFooter>
+            </Modal>
             <Row>
               <Col>
                 <Label for="status">Status</Label>
@@ -120,32 +227,42 @@ class CourseDetail extends Component {
                       <Card>
                         <CardBody>
                           <Button
-                          color="info"
+                            color="info"
+                            onClick={() => this.createModule()}
                           >
                             {'New Module'}
                           </Button>
+                          <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
                           <Table hover bordered size="sm">
                             <thead>
                               <tr>
-                                <th>Index</th>
+                                <th>Order</th>
                                 <th>Name</th>
                                 <th>Edit</th>
                                 <th>Remove</th>
+                                <th>Detail</th>
                               </tr>
                             </thead>
                             <tbody>
                               {currentCourse.modules ? currentCourse.modules.map((item, index) => {
                                 return (
                                   <tr>
-                                    <th scope="row">{index + 1}</th>
+                                    <th scope="row">{item.slot}</th>
                                     <td>{item.name}</td>
                                     <th>
                                       <Button
+                                        onClick={() => this.openModalUpdate(item)}
                                       >edit</Button>
                                     </th>
                                     <th>
                                       <Button
-                                        >remove</Button>
+                                        onClick={() => this.deleteModule(item.id)}
+                                      >remove</Button>
+                                    </th>
+                                    <th>
+                                      <Button
+                                        onClick={() => console.log('object')}
+                                      >Detail</Button>
                                     </th>
                                   </tr>
                                 );
@@ -186,6 +303,9 @@ function mapStateToProps({course}, ownProps) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
       createCourse,
+      createModule,
+      deleteModule,
+      updateModule,
     }, dispatch);
 }
 

@@ -10,4 +10,9 @@ export const COURSE_GET_ALL = "COURSE_GET_ALL";
 export const COURSE_UPDATE_STATUS = "COURSE_UPDATE_STATUS";
 export const COURSE_CREATE = "COURSE_CREATE";
 
+//module
+export const MODULE_CREATE = "MODULE_CREATE";
+export const MODULE_DELETE = "MODULE_DELETE";
+export const MODULE_UPDATE = "MODULE_UPDATE";
+
 export const SET_HISTORY = "SET_HISTORY";

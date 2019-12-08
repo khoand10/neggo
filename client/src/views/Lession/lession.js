@@ -6,6 +6,7 @@ import {compare} from '../../utils/helper';
 import Quiz from '../Quiz/quiz';
 
 import {getPartByLessionID} from'../../actions/part';
+import {getLessionByID} from '../../actions/lession';
 import classnames from 'classnames';
 
 const Markdown = require('react-markdown');
@@ -17,16 +18,21 @@ class Lession extends Component {
       this.state = {
           currentIndexPart: 0,
           currentPart: [],
+          currentLession: {},
       }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {lessionID} = this.props;
     this.props.getPartByLessionID(lessionID).then(
         (rs) => {
             this.setState({currentPart: rs});
         }
-    )
+    );
+    const rs = await this.props.getLessionByID(lessionID);
+    if (rs.status === 200) {
+        this.setState({currentLession: rs.data});
+    }
   }
 
   renderDocContent(currentPart) {
@@ -52,8 +58,8 @@ class Lession extends Component {
   }
 
   render() {
-    const {currentCourse, currentModule, currentLession} = this.props;
-    const {currentIndexPart, currentPart} = this.state;
+    const {currentModule} = this.props;
+    const {currentIndexPart, currentPart, currentLession} = this.state;
     const parts = currentPart.sort(compare);
     const currentFirstPart = parts[currentIndexPart];
     if (!currentFirstPart) {
@@ -68,7 +74,7 @@ class Lession extends Component {
                     className='course-info'
                 >
                     <h4>{currentModule.name}</h4>
-                    <Badge color="secondary">{currentLession.name}</Badge>
+                    <Badge color="secondary">{currentLession.name ? currentLession.name : ''}</Badge>
                 </Col>
             </Row>
             <Row>
@@ -114,12 +120,11 @@ function mapStateToProps({course}, ownProps) {
     const {courseID, moduleID, lessionID} = ownProps.match.params;
     const currentCourse = course.find((c) => c.id == courseID);
     const currentModule = currentCourse.modules.find((m) => m.id == moduleID);
-    const currentLession = currentModule.lessions.find((l) => l.id == lessionID);
+    // const currentLession = currentModule.lessions.find((l) => l.id == lessionID);
 
     return {
-        currentCourse,
         currentModule,
-        currentLession,
+        // currentLession,
         lessionID,
     };
   }
@@ -127,6 +132,7 @@ function mapStateToProps({course}, ownProps) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getPartByLessionID,
+        getLessionByID,
     }, dispatch);
 }
 

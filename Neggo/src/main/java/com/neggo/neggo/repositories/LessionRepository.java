@@ -9,5 +9,5 @@ import java.util.List;
 public interface LessionRepository extends JpaRepository<Lession, Long> {
     @Query("SELECT t FROM Lession t WHERE t.id = ?1")
     Lession findByLessionID(Long id);
-//    List<Lession> findBymoduleID(Long id);
+    List<Lession> findBymoduleID(Long id);
 }

@@ -4,6 +4,9 @@ import {
     COURSE_UPDATE_STATUS,
     COURSE_CREATE,
     API,
+    MODULE_CREATE,
+    MODULE_DELETE,
+    MODULE_UPDATE,
 } from './action_types';
 
 export const getAllCourses = () => {
@@ -43,6 +46,45 @@ export const createCourse = (newCourse) => {
         if (rs.status === 200) {
             dispatch({
                 type: COURSE_CREATE,
+                payload: rs.data,
+            });
+        }
+        return rs;
+    }
+}
+
+export const createModule = (newModule) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.post(`${API}/api/modules`, newModule);
+        if (rs.status === 200) {
+            dispatch({
+                type: MODULE_CREATE,
+                payload: rs.data,
+            });
+        }
+        return rs;
+    }
+}
+
+export const deleteModule = (moduleID, courseID) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.delete(`${API}/api/modules/${moduleID}`);
+        if (rs.status === 200) {
+            dispatch({
+                type: MODULE_DELETE,
+                payload: {moduleID, courseID},
+            });
+        }
+        return rs;
+    }
+}
+
+export const updateModule = (newModule) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.put(`${API}/api/modules`, newModule);
+        if (rs.status === 200) {
+            dispatch({
+                type: MODULE_UPDATE,
                 payload: rs.data,
             });
         }

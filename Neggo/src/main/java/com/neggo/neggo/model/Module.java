@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "modules")
@@ -21,13 +19,13 @@ public class Module implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private int order;
+    private int slot;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "course_id", foreignKey = @ForeignKey(name = "FK_module_course_id"))
     @JsonBackReference
     private Course course;
 
-    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
-    private Set<Lession> lessions = new HashSet<>();
+//    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+//    private Set<Lession> lessions = new HashSet<>();
 }

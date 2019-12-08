@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModuleForm {
+    private Long id;
     private String name;
     private Long courseID;
-    private int order;
+    private int slot;
 }

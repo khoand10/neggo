@@ -8,4 +8,5 @@ import java.util.List;
 public interface PartService {
     Part create(PartForm part);
     List<Part> findByLessionID(Long id);
+    List<Part> findAll();
 }

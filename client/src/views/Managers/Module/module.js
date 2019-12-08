@@ -120,7 +120,7 @@ class Module extends Component {
                       <Card>
                         <CardBody>
                           <Button
-                          color="info"
+                            color="info"
                           >
                             {'New Module'}
                           </Button>

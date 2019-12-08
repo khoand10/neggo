@@ -29,8 +29,8 @@ public class LessionServiceImpl implements LessionService {
         return lessionRepository.findByLessionID(id);
     }
 
-//    @Override
-//    public List<Lession> findByModuleID(Long id) {
-//        return lessionRepository.findBymoduleID(id);
-//    }
+    @Override
+    public List<Lession> findByModuleID(Long id) {
+        return lessionRepository.findBymoduleID(id);
+    }
 }

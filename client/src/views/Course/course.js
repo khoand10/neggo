@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
 import {compare} from '../../utils/helper';
+
+import Module from '../module/module';
 const Markdown = require('react-markdown');
 
 class Course extends Component {
 
   render() {
     const {currentCourse} = this.props;
-    const modules = currentCourse.modules.sort(compare);
+    currentCourse.modules.sort(compare);
     return (
       <div class="container-fluid">
         <Row>
@@ -28,20 +30,21 @@ class Course extends Component {
             </Row>
             <Row className="list-lession">
               {currentCourse && currentCourse.modules.map((item, index) => {
-                const lessions = item.lessions.sort(compare);
+                // const lessions = item.lessions.sort(compare);
                 return (
-                  <ListGroup>
-                    <ListGroupItem active tag="button" action>{item.name}</ListGroupItem>
-                    {lessions.map((lession, index) => {
-                      return (
-                        <ListGroupItem
-                          tag="button"
-                          action
-                          onClick={() => this.props.history.push(`/lession/${currentCourse.id}/${item.id}/${lession.id}`)}
-                        >{lession.name}</ListGroupItem>
-                      );
-                    })}
-                  </ListGroup>
+                  <Module moduleID={item.id} module={item} courseID={currentCourse.id}/>
+                  // <ListGroup>
+                  //   <ListGroupItem active tag="button" action>{item.name}</ListGroupItem>
+                  //   {lessions.map((lession, index) => {
+                  //     return (
+                  //       <ListGroupItem
+                  //         tag="button"
+                  //         action
+                  //         onClick={() => this.props.history.push(`/lession/${currentCourse.id}/${item.id}/${lession.id}`)}
+                  //       >{lession.name}</ListGroupItem>
+                  //     );
+                  //   })}
+                  // </ListGroup>
                 );
               })}
             </Row>

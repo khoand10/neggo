@@ -1,8 +1,8 @@
 export const compare = ( a, b ) => {
-    if ( a.order < b.order ){
+    if ( a.slot < b.slot ){
       return -1;
     }
-    if ( a.order > b.order ){
+    if ( a.slot > b.slot ){
       return 1;
     }
     return 0;

@@ -1,7 +1,6 @@
 package com.neggo.neggo.controller;
 
 import com.neggo.neggo.controller.handle.PartForm;
-import com.neggo.neggo.model.Lession;
 import com.neggo.neggo.model.Part;
 import com.neggo.neggo.service.LessionService;
 import com.neggo.neggo.service.PartService;
@@ -41,6 +40,12 @@ public class PartController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Part>> listPartByLession(@PathVariable Long id) {
         List<Part> parts = partService.findByLessionID(id);
+        return new ResponseEntity<>(parts, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<Part>> listPart() {
+        List<Part> parts = partService.findAll();
         return new ResponseEntity<>(parts, HttpStatus.OK);
     }
 

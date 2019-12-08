@@ -2,7 +2,6 @@ package com.neggo.neggo.controller;
 
 import com.neggo.neggo.controller.handle.LessionForm;
 import com.neggo.neggo.model.Lession;
-import com.neggo.neggo.model.Module;
 import com.neggo.neggo.service.LessionService;
 import com.neggo.neggo.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +28,27 @@ public class LessionController {
         return new ResponseEntity<>(lessions, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//    public ResponseEntity<List<Lession>> listLessionByModule(@PathVariable Long id) {
-//        List<Lession> lessions = lessionService.findByModuleID(id);
-//        return new ResponseEntity<>(lessions, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<Lession>> listLessionByModule(@RequestParam(value = "moduleID") Long id) {
+        List<Lession> lessions = lessionService.findByModuleID(id);
+        return new ResponseEntity<>(lessions, HttpStatus.OK);
+    }
 
-//    @PostMapping
-//    public ResponseEntity<Lession> createLession(@Valid @RequestBody LessionForm lessionForm) {
+    @RequestMapping(value = "/{lessionID}", method = RequestMethod.GET)
+    public ResponseEntity<Lession> deleteModule(@PathVariable(value = "lessionID") Long id) {
+        Lession lession = lessionService.findByID(id);
+        return new ResponseEntity<>(lession, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Lession> createLession(@Valid @RequestBody LessionForm lessionForm) {
 //        Module module = moduleService.findByID(lessionForm.getModuleID());
-//        Lession lession = new Lession();
-//        lession.setName(lessionForm.getName());
-//        lession.setOrder(lessionForm.getOrder());
-//        lession.setModule(module);
-//        lessionService.create(lession);
-//        return new ResponseEntity<>(lession, HttpStatus.OK);
-//    }
+        Lession lession = new Lession();
+        lession.setName(lessionForm.getName());
+        lession.setSlot(lessionForm.getSlot());
+        lession.setModuleID(lessionForm.getModuleID());
+        lessionService.create(lession);
+        return new ResponseEntity<>(lession, HttpStatus.OK);
+    }
 
 }

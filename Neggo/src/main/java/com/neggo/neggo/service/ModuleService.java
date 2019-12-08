@@ -5,7 +5,8 @@ import com.neggo.neggo.model.Module;
 import java.util.List;
 
 public interface ModuleService {
-    void createModule(Module module);
+    Module createModule(Module module);
     Module findByID(Long id);
     List<Module> findAll();
+    void delete(Long id);
 }
