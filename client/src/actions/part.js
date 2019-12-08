@@ -5,10 +5,22 @@ import {
 
 export const getPartByLessionID = (lessionID) => {
     return async (dispatch, getState) => {
-        const rs = await axios.get(`${API}/api/parts/${lessionID}`);
-        if (rs.status === 200) {
-            return rs.data;
-        }
-        return [];
+        const rs = await axios.get(`${API}/api/lessions/${lessionID}/parts`);
+        return rs;
     }
 }
+
+export const createPart = (newPart) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.post(`${API}/api/parts`, newPart);
+        return rs;
+    }
+}
+
+export const updatePart = (newPart) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.put(`${API}/api/parts`, newPart);
+        return rs;
+    }
+}
+

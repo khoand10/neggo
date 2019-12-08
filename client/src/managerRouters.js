@@ -8,7 +8,7 @@ const memberRoutes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Home },
   { path: '/members', name: 'Members', component: Member },
-  { path: '/course/:courseID', name: 'Course Detail', component: Course },
+  { path: '/course/:courseID', name: 'Course Creator', component: Course },
 ];
 
 export default memberRoutes;

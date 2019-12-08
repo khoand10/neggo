@@ -23,9 +23,9 @@ export const getLessionByID = (lessionID) => {
     }
 }
 
-export const createLession = (newLession) => {
+export const createQuestion = (newQuestion) => {
     return async (dispatch, getState) => {
-        const rs = await axios.post(`${API}/api/lessions`, newLession);
+        const rs = await axios.post(`${API}/api/questions`, newQuestion);
         return rs;
     }
 }

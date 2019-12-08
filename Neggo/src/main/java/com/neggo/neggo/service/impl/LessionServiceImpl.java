@@ -33,4 +33,9 @@ public class LessionServiceImpl implements LessionService {
     public List<Lession> findByModuleID(Long id) {
         return lessionRepository.findBymoduleID(id);
     }
+
+    @Override
+    public void delete(Long id) {
+        lessionRepository.deleteById(id);
+    }
 }

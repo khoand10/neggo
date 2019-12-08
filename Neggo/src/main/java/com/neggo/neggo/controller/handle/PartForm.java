@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PartForm {
+    private Long id;
     private String name;
     private boolean type;
     private String content;
-    private int order;
+    private int slot;
     private Long lessionID;
-    private QuestionForm questionForm;
 }

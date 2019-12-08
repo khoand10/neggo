@@ -6,7 +6,8 @@ import com.neggo.neggo.model.Part;
 import java.util.List;
 
 public interface PartService {
-    Part create(PartForm part);
+    Part create(Part part);
     List<Part> findByLessionID(Long id);
+    Part findByID(Long id);
     List<Part> findAll();
 }

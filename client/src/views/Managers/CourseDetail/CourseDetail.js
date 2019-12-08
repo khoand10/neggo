@@ -13,6 +13,8 @@ import {createCourse, createModule, deleteModule, updateModule} from '../../../a
 
 import {compare} from '../../../utils/helper';
 
+import Module from '../Module/module';
+
 class CourseDetail extends Component {
 
   constructor() {
@@ -29,6 +31,7 @@ class CourseDetail extends Component {
       moduleEditing: {},
       moduleNameEditing: '',
       moduleSlotEditing: '',
+      detailModule: null,
       modal: false,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -161,6 +164,137 @@ class CourseDetail extends Component {
     }
   }
 
+  renderModule() {
+    const {currentCourse} = this.props;
+    if (currentCourse && currentCourse.modules) {
+      currentCourse.modules.sort(compare);
+    }
+    return (
+      <React.Fragment>
+        <h2>{currentCourse.name}</h2>
+        <Form>
+          <Row>
+            <Col>
+              <Label for="name">Name</Label>
+              <Input onChange={this.handleChange} type="text" name="name" id="name" placeholder="course name" value={this.state.name} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label for="description">Description</Label>
+              <Input onChange={this.handleChange} type="textarea" name="description" id="description" placeholder="course description" value={this.state.description} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label for="info">Info</Label>
+              <Input onChange={this.handleChange} type="textarea" name="courseInfo" id="courseInfo" placeholder="course info" value={this.state.courseInfo} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Label for="logo">Logo</Label>
+              <Input onChange={this.handleChange} type="text" name="logo" id="logo" placeholder="course logo url" value={this.state.logo} />
+            </Col>
+          </Row>
+          <Modal isOpen={this.state.modal} toggle={() => this.toggleModalUpdate()}>
+            <ModalHeader toggle={() => this.toggleModalUpdate()}>Update module</ModalHeader>
+            <ModalBody>
+                <Label for="md-module-name">Name</Label>
+                <Input type="textarea" placeholder="module name" name="moduleNameEditing" onChange={this.handleChange} rows={1} value={this.state.moduleNameEditing} />
+                <Label for="md-module-slot">Slot</Label>
+                <Input type="textarea" placeholder="module slot" name="moduleSlotEditing" onChange={this.handleChange} rows={1} value={this.state.moduleSlotEditing} />
+            </ModalBody>
+            <ModalFooter>
+                <Button color="primary" onClick={() => this.updateModule()}>Update</Button>{' '}
+                <Button color="secondary" onClick={() => this.closeModal()}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+          <Row>
+            <Col>
+              <Label for="status">Status</Label>
+              <CustomInput onChange={this.handleChange} value={true} type="switch" id="exampleCustomSwitch" name="customSwitch"/>
+            </Col>
+          </Row>
+          {currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
+            <Row>
+              <Col>
+                  <Button
+                    color="primary"
+                    onClick={() => this.toggle()}
+                    style={{ marginBottom: '1rem' }}
+                    size="lg"
+                    block={true}
+                    outline={true}
+                  >{'Modules of course'}</Button>
+                  <Collapse isOpen={this.state.isOpen}>
+                    <Card>
+                      <CardBody>
+                        <Button
+                          color="info"
+                          onClick={() => this.createModule()}
+                        >
+                          {'New Module'}
+                        </Button>
+                        <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
+                        <Table hover bordered size="sm">
+                          <thead>
+                            <tr>
+                              <th>Order</th>
+                              <th>Name</th>
+                              <th>Edit</th>
+                              <th>Remove</th>
+                              <th>Detail</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {currentCourse.modules ? currentCourse.modules.map((item, index) => {
+                              return (
+                                <tr>
+                                  <th scope="row">{item.slot}</th>
+                                  <td>{item.name}</td>
+                                  <th>
+                                    <Button
+                                      onClick={() => this.openModalUpdate(item)}
+                                    >edit</Button>
+                                  </th>
+                                  <th>
+                                    <Button
+                                      onClick={() => this.deleteModule(item.id)}
+                                    >remove</Button>
+                                  </th>
+                                  <th>
+                                    <Button
+                                      onClick={() => this.setState({detailModule: item})}
+                                    >Detail</Button>
+                                  </th>
+                                </tr>
+                              );
+                            }) : (null)}
+                          </tbody>
+                        </Table> 
+                      </CardBody>
+                    </Card>
+                  </Collapse>
+                </Col>
+            </Row> : null
+          }
+          {this.state.error ?
+              <div class="alert alert-danger" role="alert">
+              Create course fail!
+            </div> : null
+          }
+          <Button
+            onClick={() => this.createCourse()}
+            color="primary"
+          >
+            {'Save'}
+          </Button>
+        </Form>
+      </React.Fragment>
+    );
+  }
+
   render() {
     const {currentCourse} = this.props;
     if (currentCourse && currentCourse.modules) {
@@ -168,125 +302,7 @@ class CourseDetail extends Component {
     }
     return (
       <div class="container-fluid course-detail">
-          <Form>
-            <Row>
-              <Col>
-                <Label for="name">Name</Label>
-                <Input onChange={this.handleChange} type="text" name="name" id="name" placeholder="course name" value={this.state.name} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label for="description">Description</Label>
-                <Input onChange={this.handleChange} type="textarea" name="description" id="description" placeholder="course description" value={this.state.description} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label for="info">Info</Label>
-                <Input onChange={this.handleChange} type="textarea" name="courseInfo" id="courseInfo" placeholder="course info" value={this.state.courseInfo} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Label for="logo">Logo</Label>
-                <Input onChange={this.handleChange} type="text" name="logo" id="logo" placeholder="course logo url" value={this.state.logo} />
-              </Col>
-            </Row>
-            <Modal isOpen={this.state.modal} toggle={() => this.toggleModalUpdate()}>
-              <ModalHeader toggle={() => this.toggleModalUpdate()}>Update module</ModalHeader>
-              <ModalBody>
-                  <Label for="md-module-name">Name</Label>
-                  <Input type="textarea" placeholder="module name" name="moduleNameEditing" onChange={this.handleChange} rows={1} value={this.state.moduleNameEditing} />
-                  <Label for="md-module-slot">Slot</Label>
-                  <Input type="textarea" placeholder="module slot" name="moduleSlotEditing" onChange={this.handleChange} rows={1} value={this.state.moduleSlotEditing} />
-              </ModalBody>
-              <ModalFooter>
-                  <Button color="primary" onClick={() => this.updateModule()}>Update</Button>{' '}
-                  <Button color="secondary" onClick={() => this.closeModal()}>Cancel</Button>
-              </ModalFooter>
-            </Modal>
-            <Row>
-              <Col>
-                <Label for="status">Status</Label>
-                <CustomInput onChange={this.handleChange} value={true} type="switch" id="exampleCustomSwitch" name="customSwitch"/>
-              </Col>
-            </Row>
-            {currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
-              <Row>
-                <Col>
-                    <Button
-                      color="primary"
-                      onClick={() => this.toggle()}
-                      style={{ marginBottom: '1rem' }}
-                      size="lg"
-                      block={true}
-                      outline={true}
-                    >{'Modules of course'}</Button>
-                    <Collapse isOpen={this.state.isOpen}>
-                      <Card>
-                        <CardBody>
-                          <Button
-                            color="info"
-                            onClick={() => this.createModule()}
-                          >
-                            {'New Module'}
-                          </Button>
-                          <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
-                          <Table hover bordered size="sm">
-                            <thead>
-                              <tr>
-                                <th>Order</th>
-                                <th>Name</th>
-                                <th>Edit</th>
-                                <th>Remove</th>
-                                <th>Detail</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {currentCourse.modules ? currentCourse.modules.map((item, index) => {
-                                return (
-                                  <tr>
-                                    <th scope="row">{item.slot}</th>
-                                    <td>{item.name}</td>
-                                    <th>
-                                      <Button
-                                        onClick={() => this.openModalUpdate(item)}
-                                      >edit</Button>
-                                    </th>
-                                    <th>
-                                      <Button
-                                        onClick={() => this.deleteModule(item.id)}
-                                      >remove</Button>
-                                    </th>
-                                    <th>
-                                      <Button
-                                        onClick={() => console.log('object')}
-                                      >Detail</Button>
-                                    </th>
-                                  </tr>
-                                );
-                              }) : (null)}
-                            </tbody>
-                          </Table> 
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </Col>
-              </Row> : null
-            }
-            {this.state.error ?
-                <div class="alert alert-danger" role="alert">
-                Create course fail!
-              </div> : null
-            }
-            <Button
-              onClick={() => this.createCourse()}
-              color="primary"
-            >
-              {'Save'}
-            </Button>
-          </Form>
+        {!this.state.detailModule ? this.renderModule() : <Module module={this.state.detailModule} back={() => this.setState({detailModule: null})} />}
       </div>
     );
   }

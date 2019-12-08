@@ -9,4 +9,5 @@ public interface LessionService {
     void create(Lession lession);
     Lession findByID(Long id);
     List<Lession> findByModuleID(Long id);
+    void delete(Long id);
 }

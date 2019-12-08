@@ -13,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionForm {
+    private Long id;
     private String name;
     private boolean isMulti;
-    private List<AnswerForm> answerForms = new ArrayList<>();
+    private Long partID;
 }

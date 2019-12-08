@@ -26,7 +26,7 @@ class Lession extends Component {
     const {lessionID} = this.props;
     this.props.getPartByLessionID(lessionID).then(
         (rs) => {
-            this.setState({currentPart: rs});
+            this.setState({currentPart: rs.data});
         }
     );
     const rs = await this.props.getLessionByID(lessionID);

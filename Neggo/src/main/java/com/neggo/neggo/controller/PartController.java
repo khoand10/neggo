@@ -23,24 +23,33 @@ public class PartController {
 
     @PostMapping
     public ResponseEntity<Part> createPart(@Valid @RequestBody PartForm partForm) {
-//        Part part = new Part();
-//        if (partForm.isType() == false) {
-//            part.setName(partForm.getName());
-//            part.setContent(partForm.getContent());
-//            part.setType(partForm.isType());
-//            part.setLession(lessionService.findByID(partForm.getLessionID()));
-//            partService.create(part);
-//        } else {
-//
-//        }
-        Part part = partService.create(partForm);
-        return new ResponseEntity<>(part, HttpStatus.OK);
+        Part part = new Part();
+        part.setName(partForm.getName());
+        part.setContent(partForm.getContent());
+        part.setSlot(partForm.getSlot());
+        part.setType(partForm.isType());
+        part.setLessionID(partForm.getLessionID());
+        Part newPart = partService.create(part);
+        return new ResponseEntity<>(newPart, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Part> updatePart(@Valid @RequestBody PartForm partForm) {
+        Part part = new Part();
+        part.setId(partForm.getId());
+        part.setName(partForm.getName());
+        part.setContent(partForm.getContent());
+        part.setSlot(partForm.getSlot());
+        part.setType(partForm.isType());
+        part.setLessionID(partForm.getLessionID());
+        Part newPart = partService.create(part);
+        return new ResponseEntity<>(newPart, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Part>> listPartByLession(@PathVariable Long id) {
-        List<Part> parts = partService.findByLessionID(id);
-        return new ResponseEntity<>(parts, HttpStatus.OK);
+    public ResponseEntity<Part> listPartByLession(@PathVariable Long id) {
+        Part part = partService.findByID(id);
+        return new ResponseEntity<>(part, HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

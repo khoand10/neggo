@@ -27,38 +27,43 @@ public class PartServiceImpl implements PartService {
     private QuestionService questionService;
 
     @Override
-    public Part create(PartForm partForm) {
-        Part part = new Part();
-        if (partForm.isType() == false) {
-            part.setName(partForm.getName());
-            part.setContent(partForm.getContent());
-            part.setType(false);
-            part.setLessionID(partForm.getLessionID());
-            partRepository.save(part);
-        } else {
-            part.setType(true);
-            // 1
-            Part newPart = partRepository.save(part);
-            Question question = new Question();
-            question.setName(partForm.getQuestionForm().getName());
-            question.setMulti(partForm.getQuestionForm().isMulti());
-            question.setPart(newPart);
-            // 2
-            Question newQuestion = questionService.create(question);
-            for (int i = 0; i < partForm.getQuestionForm().getAnswerForms().size(); i++) {
-                Answer answer = new Answer();
-                answer.setContent(partForm.getQuestionForm().getAnswerForms().get(i).getContent());
-                answer.setQuestion(newQuestion);
-                // 3
-                answerService.create(answer);
-            }
-        }
-        return part;
+    public Part create(Part part) {
+//        Part part = new Part();
+//        if (partForm.isType() == false) {
+//            part.setName(partForm.getName());
+//            part.setContent(partForm.getContent());
+//            part.setType(false);
+//            part.setLessionID(partForm.getLessionID());
+//            partRepository.save(part);
+//        } else {
+//            part.setType(true);
+//            // 1
+//            Part newPart = partRepository.save(part);
+//            Question question = new Question();
+//            question.setName(partForm.getQuestionForm().getName());
+//            question.setMulti(partForm.getQuestionForm().isMulti());
+//            question.setPart(newPart);
+//            // 2
+//            Question newQuestion = questionService.create(question);
+//            for (int i = 0; i < partForm.getQuestionForm().getAnswerForms().size(); i++) {
+//                Answer answer = new Answer();
+//                answer.setContent(partForm.getQuestionForm().getAnswerForms().get(i).getContent());
+//                answer.setQuestion(newQuestion);
+//                // 3
+//                answerService.create(answer);
+//            }
+//        }
+        return partRepository.save(part);
     }
 
     @Override
     public List<Part> findByLessionID(Long id) {
         return partRepository.findBylessionID(id);
+    }
+
+    @Override
+    public Part findByID(Long id) {
+        return partRepository.findByID(id);
     }
 
     @Override
