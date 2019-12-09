@@ -7,6 +7,7 @@ import {
     MODULE_CREATE,
     MODULE_DELETE,
     MODULE_UPDATE,
+    COURSE_ACTIVE_GET_ALL,
 } from './action_types';
 
 export const getAllCourses = () => {
@@ -15,6 +16,19 @@ export const getAllCourses = () => {
         if (rs.status === 200) {
             dispatch({
                 type: COURSE_GET_ALL,
+                payload: rs.data,
+            });
+        }
+        return rs;
+    }
+}
+
+export const getAllCoursesActive = () => {
+    return async (dispatch, getState) => {
+        const rs = await axios.get(`${API}/api/courses/active`);
+        if (rs.status === 200) {
+            dispatch({
+                type: COURSE_ACTIVE_GET_ALL,
                 payload: rs.data,
             });
         }

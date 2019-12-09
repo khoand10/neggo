@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
 import {logout} from '../../actions/login';
+import {getAllCoursesActive} from '../../actions/course';
 
 import {
   AppFooter,
@@ -20,6 +21,9 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
+  componentWillMount() {
+    this.props.getAllCoursesActive();
+  }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
@@ -84,6 +88,7 @@ function mapStateToProps({}) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     logout,
+    getAllCoursesActive,
   }, dispatch);
 }
 

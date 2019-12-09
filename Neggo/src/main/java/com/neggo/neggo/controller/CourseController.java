@@ -25,6 +25,12 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/active")
+    public ResponseEntity<List<Course>> listCoursesActive() {
+        List<Course> courses = courseService.findCourseActive();
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Course> createCourse(@Valid @RequestBody Course course) {
         courseService.create(course);

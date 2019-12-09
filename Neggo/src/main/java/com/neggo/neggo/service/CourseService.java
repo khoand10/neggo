@@ -8,4 +8,5 @@ public interface CourseService {
     List<Course> getAll();
     Course create(Course course);
     Course getByID(Long id);
+    List<Course> findCourseActive();
 }

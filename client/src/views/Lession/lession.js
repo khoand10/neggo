@@ -105,10 +105,10 @@ class Lession extends Component {
                                 );
                             }
                         })}
-                        <TabContent activeTab={currentIndexPart}>
-                            {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
-                        </TabContent>
                     </Nav>
+                    <TabContent activeTab={currentIndexPart}>
+                        {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
+                    </TabContent>
                 </Col>
             </Row>
         </div>
@@ -116,9 +116,9 @@ class Lession extends Component {
   }
 }
 
-function mapStateToProps({course}, ownProps) {
+function mapStateToProps({courseActives}, ownProps) {
     const {courseID, moduleID, lessionID} = ownProps.match.params;
-    const currentCourse = course.find((c) => c.id == courseID);
+    const currentCourse = courseActives.find((c) => c.id == courseID);
     const currentModule = currentCourse.modules.find((m) => m.id == moduleID);
     // const currentLession = currentModule.lessions.find((l) => l.id == lessionID);
 

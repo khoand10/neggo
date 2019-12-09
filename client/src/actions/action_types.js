@@ -9,6 +9,7 @@ export const USER_GET_ALL = "USER_GET_ALL";
 export const COURSE_GET_ALL = "COURSE_GET_ALL";
 export const COURSE_UPDATE_STATUS = "COURSE_UPDATE_STATUS";
 export const COURSE_CREATE = "COURSE_CREATE";
+export const COURSE_ACTIVE_GET_ALL = "COURSE_ACTIVE_GET_ALL";
 
 //module
 export const MODULE_CREATE = "MODULE_CREATE";

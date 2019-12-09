@@ -171,7 +171,7 @@ class CourseDetail extends Component {
     }
     return (
       <React.Fragment>
-        <h2>{currentCourse.name}</h2>
+        <h2>{this.state.name}</h2>
         <Form>
           <Row>
             <Col>
@@ -216,6 +216,13 @@ class CourseDetail extends Component {
               <CustomInput onChange={this.handleChange} value={true} type="switch" id="exampleCustomSwitch" name="customSwitch"/>
             </Col>
           </Row>
+          <Button
+            color="info"
+            onClick={() => this.createModule()}
+          >
+            {'New Module'}
+          </Button>
+          <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
           {currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
             <Row>
               <Col>
@@ -230,13 +237,6 @@ class CourseDetail extends Component {
                   <Collapse isOpen={this.state.isOpen}>
                     <Card>
                       <CardBody>
-                        <Button
-                          color="info"
-                          onClick={() => this.createModule()}
-                        >
-                          {'New Module'}
-                        </Button>
-                        <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
                         <Table hover bordered size="sm">
                           <thead>
                             <tr>

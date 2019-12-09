@@ -81,9 +81,9 @@ class Course extends Component {
   }
 }
 
-function mapStateToProps({course}, ownProps) {
+function mapStateToProps({courseActives}, ownProps) {
     const courseID = ownProps.match.params.id;
-    const currentCourse = course.find((c) => c.id == courseID);
+    const currentCourse = courseActives.find((c) => c.id == courseID);
     return {
         currentCourse
     };

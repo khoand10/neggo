@@ -63,9 +63,9 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({course}) {
+function mapStateToProps({courseActives}) {
   return {
-    course
+    course: courseActives
   };
 }
 

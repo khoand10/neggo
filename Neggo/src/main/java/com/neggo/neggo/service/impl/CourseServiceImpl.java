@@ -28,4 +28,9 @@ public class CourseServiceImpl implements CourseService {
     public Course getByID(Long id) {
         return courseRepository.findByCourseID(id);
     }
+
+    @Override
+    public List<Course> findCourseActive() {
+        return courseRepository.findCourseActive();
+    }
 }
