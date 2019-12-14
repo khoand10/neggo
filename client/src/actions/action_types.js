@@ -1,4 +1,4 @@
-export const API = "http://localhost:8080";
+export const API = "http://192.168.43.160:8080";
 export const USER_LOGGED_IN = "USER_LOGGED_IN";
 export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
 
@@ -17,3 +17,4 @@ export const MODULE_DELETE = "MODULE_DELETE";
 export const MODULE_UPDATE = "MODULE_UPDATE";
 
 export const SET_HISTORY = "SET_HISTORY";
+export const UPDATE_HISTORY = "UPDATE_HISTORY";

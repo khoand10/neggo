@@ -9,7 +9,7 @@ import users from "./user";
 
 import {SET_HISTORY, COURSE_ACTIVE_GET_ALL} from '../actions/action_types';
 
-const historys = (state = null, action) => {
+const histories = (state = null, action) => {
     switch (action.type) {
         case SET_HISTORY:
             return action.payload;
@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
     somedata,
     form,
     toastr,
-    historys,
+    histories,
     users,
     courseActives,
 });

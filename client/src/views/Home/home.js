@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from "react-router-dom";
+
+import {updateHistory} from '../../actions/history';
 
 import {Card, CardBody, CardFooter, CardHeader, Col, Row, Button, Badge, CardText} from 'reactstrap';
 
@@ -13,6 +16,20 @@ class Home extends Component {
       totalLession += element.lessions.length;      
     }
     return totalLession;
+  }
+
+  takeThisCourse = (item) => {
+    const {user, histories} = this.props;
+    this.props.history.push(`/course/${item.id}`);
+    if (!histories[item.id]) {
+      const newHistory = {...histories};
+      newHistory[item.id] = {};
+      const newData = {
+        userID: user.id,
+        history: JSON.stringify(newHistory),
+      }
+      this.props.updateHistory(newData);
+    }
   }
 
   render() {
@@ -34,7 +51,7 @@ class Home extends Component {
                         {item.description}
                     </CardText>
                         <Button
-                          onClick={() => this.props.history.push(`/course/${item.id}`)}
+                          onClick={() => this.takeThisCourse(item)}
                         >More</Button>
                     </CardBody>
                     <CardFooter>
@@ -63,15 +80,19 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({courseActives}) {
+function mapStateToProps(state) {
+  const {courseActives, user, histories} = state;
   return {
-    course: courseActives
+    course: courseActives,
+    user,
+    histories,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    updateHistory,
   }, dispatch);
 }
 
-export default (connect(mapStateToProps, mapDispatchToProps)(Home));
+export default (connect(mapStateToProps, mapDispatchToProps)(withRouter(Home)));
