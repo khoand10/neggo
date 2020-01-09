@@ -42,21 +42,29 @@ class Home extends Component {
 
   render() {
     const {course} = this.props;
+    let listCourse = [];
+    if (course && course.length > 3) {
+      listCourse[0] = course[0];
+      listCourse[1] = course[1];
+      listCourse[2] = course[3];
+    } else if (course) {
+      listCourse = [...course];
+    }
     return (
         <React.Fragment>
-          <Col xs="12" xl="">
+          <Col xs="12" xl="12">
             <Card inverse>
               <CardImg className="bgr-img" top src="../../assets/img/bgr2.jpeg" alt="Card image cap" />
               <CardImgOverlay>
                 <div className="slide-text">
                   <h1>Free, fun, effective learning - what can be better?</h1>
-                  <Button onClick={() => this.props.history.push()} size={'lg'} block color="success" className="btn-pill start-learning-btn">Start Learning Now</Button>
+                  <Button onClick={() => this.props.history.push('/courses')} size={'lg'} block color="success" className="btn-pill start-learning-btn">Start Learning Now</Button>
                 </div>
               </CardImgOverlay>
             </Card>
           </Col>
           <Row>
-              {course ? course.map((item, id) => {
+              {listCourse ? listCourse.map((item, id) => {
                   // const totalLession = this.getTotalLession(item.modules);
                   const totalLession = 10;
                   return (

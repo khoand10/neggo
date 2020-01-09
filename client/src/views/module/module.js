@@ -23,6 +23,11 @@ class Module extends Component {
             this.setState({lessions: rs.data});
         }
     }
+
+    takeLession = (courseID, moduleID, lessionID) => {
+        this.props.history.push(`/lession/${courseID}/${moduleID}/${lessionID}`);
+    }
+
     render() {
         const {module, courseID} = this.props;
         return (
@@ -34,7 +39,7 @@ class Module extends Component {
                     <ListGroupItem
                         tag="button"
                         action
-                        onClick={() => this.props.history.push(`/lession/${courseID}/${module.id}/${lession.id}`)}
+                        onClick={() => this.takeLession(courseID, module.id, lession.id)}
                     >{lession.name}</ListGroupItem>
                     );
                 })}

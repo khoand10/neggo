@@ -57,6 +57,13 @@ class Lession extends Component {
     }
   }
 
+  nextPart = () => {
+      const {currentPart, currentIndexPart} = this.state;
+      if (currentIndexPart < currentPart.length - 1) {
+        this.setState({currentIndexPart: currentIndexPart+1});
+      }
+  }
+
   render() {
     const {currentModule} = this.props;
     const {currentIndexPart, currentPart, currentLession} = this.state;
@@ -109,6 +116,23 @@ class Lession extends Component {
                     <TabContent activeTab={currentIndexPart}>
                         {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
                     </TabContent>
+                    {/* <Button
+                        color="success"
+                        onClick={() => this.nextPart()}
+                    >
+                        next
+                    </Button> */}
+                    <span
+                        className="nextBtn"
+                        onClick={() => this.nextPart()}
+                    ><i className="cui-arrow-right icons font-2xl d-block mt-4"></i></span>
+                    <span
+                        className="backBtn"
+                        onClick={() => this.nextPart()}
+                    ><i className="cui-arrow-left icons font-2xl d-block mt-4"></i></span>
+                    <span><i className="cui-chevron-left icons font-2xl d-block mt-4"></i></span>
+                </Col>
+                <Col>
                 </Col>
             </Row>
         </div>

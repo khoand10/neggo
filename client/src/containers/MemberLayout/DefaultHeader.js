@@ -35,13 +35,13 @@ class DefaultHeader extends Component {
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/course" className="nav-link" >Courses</NavLink>
+            <NavLink to="/courses" className="nav-link" >Courses</NavLink>
           </NavItem>
           <NavItem className="px-3">
             <NavLink to="/codes" className="nav-link" >Code playground</NavLink>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink to="/discuss" className="nav-link" >Discuss</NavLink>
+            <NavLink disabled to="/discuss" className="nav-link" >Discuss</NavLink>
           </NavItem>
           {/* <NavItem className="px-3">
             <Link to="/users" className="nav-link">Users</Link>

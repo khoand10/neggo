@@ -15,6 +15,7 @@ import {compare} from '../../../utils/helper';
 
 import Module from '../Module/module';
 
+const Markdown = require('react-markdown');
 class CourseDetail extends Component {
 
   constructor() {
@@ -22,7 +23,9 @@ class CourseDetail extends Component {
     this.state = {
       name: '',
       description: '',
+      desViewMD: false,
       courseInfo: '',
+      infoVIewMD: false,
       logo: '',
       active: null,
       error: false,
@@ -182,13 +185,30 @@ class CourseDetail extends Component {
           <Row>
             <Col>
               <Label for="description">Description</Label>
-              <Input onChange={this.handleChange} type="textarea" name="description" id="description" placeholder="course description" value={this.state.description} />
-            </Col>
+              <span
+                onClick={() => this.setState({desViewMD: !this.state.desViewMD})}
+              >
+                <i className="cui-code icons font-2xl d-block mt-2"></i>
+              </span>
+              {this.state.desViewMD ? 
+                <Markdown source={this.state.description}/> : 
+                <Input onChange={this.handleChange} type="textarea" name="description" id="description" placeholder="course description" value={this.state.description} />
+              }
+              </Col>
           </Row>
           <Row>
             <Col>
               <Label for="info">Info</Label>
-              <Input onChange={this.handleChange} type="textarea" name="courseInfo" id="courseInfo" placeholder="course info" value={this.state.courseInfo} />
+              <span
+                onClick={() => this.setState({infoVIewMD: !this.state.infoVIewMD})}
+              >
+                <i className="cui-code icons font-2xl d-block mt-2"></i>
+              </span>
+              {this.state.infoVIewMD ? 
+                <Markdown source={this.state.courseInfo}/> : 
+                <Input onChange={this.handleChange} type="textarea" name="courseInfo" id="courseInfo" placeholder="course info" value={this.state.courseInfo} />
+              }
+              
             </Col>
           </Row>
           <Row>

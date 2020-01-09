@@ -65,7 +65,10 @@ class Codes extends Component {
     if (rs.status === 200) {
       const result = rs.data;
       if (result.exitCode === 0) {
-        this.setState({result: result.stdout});
+        this.setState({
+          result: result.stdout,
+          runError: false,
+        });
       } else {
         this.setState({
           result: result.stderr,
@@ -80,7 +83,7 @@ class Codes extends Component {
         <div className="container-fluid">
             <Row>
               <Col
-                md={1}
+                md={2}
                 className='course-info'
               >
                 <FormGroup>

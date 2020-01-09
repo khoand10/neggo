@@ -33,6 +33,15 @@
     .row {
         margin-bottom: 15px;
     }
+    form {
+        .icons {
+            &:hover {
+                color: red;
+                cursor: pointer;
+            }
+    
+        }
+    }
 }
 .output {
     border: 1px #0a060622 solid;
@@ -50,4 +59,15 @@
 .slide-text {
     margin-top: 20%;
     margin-left: 10%;
+}
+
+.nextBtn {
+    position: absolute;
+    right: 0px;
+}
+
+.backBtn {
+    position: absolute;
+    margin-right: 10px;
+    margin-left: 87%;
 }

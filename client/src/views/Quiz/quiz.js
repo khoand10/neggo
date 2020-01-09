@@ -69,10 +69,9 @@ class Quiz extends Component {
     renderQuestion() {
         const {question} = this.props;
         const {answers} = question;
-        console.log('state ', this.setState.incorrect);
         return (
             <React.Fragment>
-                <h3>{question.name}</h3>
+                <h5>{question.name}</h5>
                 <Form>
                     <FormGroup>
                         {answers.map((item, index) => {
