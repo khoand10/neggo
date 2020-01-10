@@ -36,22 +36,19 @@ class Module extends Component {
                 }
             }
         } else {
-            newHistory[courseID][moduleID] = {...newHistory[courseID][moduleID],
-                [lessionID]: {}
-            }
+            const newL = {[lessionID]: {}}
+            newHistory[courseID][moduleID] = {...newHistory[courseID][moduleID], newL}
         }
         const newData = {
             userID: user.id,
             history: JSON.stringify(newHistory),
           }
-          console.log('new his ', newHistory);
           this.props.updateHistory(newData);
         this.props.history.push(`/lession/${courseID}/${moduleID}/${lessionID}`);
     }
 
     render() {
         const {module, courseID, histories} = this.props;
-        // console.log('his ', histories);
         return (
             <ListGroup>
                 <ListGroupItem active tag="button" action>{module.name}</ListGroupItem>
@@ -60,7 +57,6 @@ class Module extends Component {
                     if (index !== 0) {
                         try {
                             const preLession = this.state.lessions[index - 1]
-                            console.log('pre ', preLession, histories, module.id);
                             nextAble = histories[courseID][module.id][preLession.id].status !== "done"
                         } catch (error) {
                             nextAble = true;

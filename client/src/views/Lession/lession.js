@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Row, Col, Badge, ButtonGroup, Button, Nav, NavLink, NavItem, TabContent} from 'reactstrap';
+import _ from 'lodash';
 import {compare} from '../../utils/helper';
 import Quiz from '../Quiz/quiz';
 
 import {getPartByLessionID} from'../../actions/part';
+import {updateHistory} from '../../actions/history';
 import {getLessionByID} from '../../actions/lession';
 import classnames from 'classnames';
 
@@ -23,10 +25,26 @@ class Lession extends Component {
   }
 
   async componentDidMount() {
-    const {lessionID} = this.props;
+    const {user, histories, courseID, currentModule, lessionID} = this.props;
     this.props.getPartByLessionID(lessionID).then(
         (rs) => {
-            this.setState({currentPart: rs.data});
+            this.setState({currentPart: rs.data}, () => { 
+                if (rs.data.length > 0) {
+                    const newHistory = {...histories};
+                    const hisModule = histories[courseID][currentModule.id][lessionID];
+                    if (_.isEmpty(hisModule)) {
+                        newHistory[courseID][currentModule.id][lessionID] = {
+                            passSlot: 1
+                        };
+                    }
+                    const newData = {
+                        userID: user.id,
+                        history: JSON.stringify(newHistory),
+                    }
+                    this.props.updateHistory(newData);
+                }
+            });
+
         }
     );
     const rs = await this.props.getLessionByID(lessionID);
@@ -46,14 +64,41 @@ class Lession extends Component {
 
   renderQuizContent(currentPart) {
     return (
-        <Quiz question={currentPart.questions[0] ? currentPart.questions[0] : null}/>
+        <Quiz item={currentPart} question={currentPart.questions[0] ? currentPart.questions[0] : null} passQuiz={this.passQuiz}/>
     );
   }
 
-  toggle = tab => {
+  passQuiz = (item) => {
+    const {user, histories, courseID, currentModule, lessionID} = this.props;
+    const newHistory = {...histories};
+    const passSlot = histories[courseID][currentModule.id][lessionID]['passSlot'];
+    if (passSlot < item.slot) {
+        newHistory[courseID][currentModule.id][lessionID]['passSlot'] = item.slot;
+    const newData = {
+        userID: user.id,
+        history: JSON.stringify(newHistory),
+        }
+        this.props.updateHistory(newData);
+    }
+  }
+
+  toggle = (tab, item) => {
       const {currentIndexPart} = this.state;
-    if(currentIndexPart !== tab) {
-        this.setState({currentIndexPart: tab});
+      if(currentIndexPart !== tab) {
+          this.setState({currentIndexPart: tab});
+          if (item.type !== true) {
+              const {user, histories, courseID, currentModule, lessionID} = this.props;
+              const newHistory = {...histories};
+              const passSlot = histories[courseID][currentModule.id][lessionID]['passSlot'];
+              if (passSlot < item.slot) {
+                newHistory[courseID][currentModule.id][lessionID]['passSlot'] = item.slot;
+                const newData = {
+                    userID: user.id,
+                    history: JSON.stringify(newHistory),
+                  }
+                  this.props.updateHistory(newData);
+              }
+          }
     }
   }
 
@@ -77,7 +122,7 @@ class Lession extends Component {
   }
 
   render() {
-    const {currentModule} = this.props;
+    const {currentModule, histories, courseID, lessionID} = this.props;
     const {currentIndexPart, currentPart, currentLession} = this.state;
     const parts = currentPart.sort(compare);
     const currentFirstPart = parts[currentIndexPart];
@@ -103,12 +148,22 @@ class Lession extends Component {
                 >
                     <Nav tabs>
                         {parts.map((item, index) => {
+                            let nextAble = false;
+                            if (index !== 0) {
+                                try {
+                                    nextAble = item.slot > histories[courseID][currentModule.id][lessionID]['passSlot'] + 1;
+                                } catch (error) {
+                                    console.log('error');
+                                    nextAble = true;
+                                }
+                            }
                             if (item.type === true) {
                                 return (
                                     <NavItem>
                                         <NavLink
+                                            disabled={nextAble}
                                             className={classnames({ active: currentIndexPart === index})}
-                                            onClick={() => this.toggle(index)}
+                                            onClick={() => this.toggle(index, item)}
                                         >
                                         Quiz</NavLink>
                                     </NavItem>
@@ -117,8 +172,9 @@ class Lession extends Component {
                                 return (
                                     <NavItem>
                                         <NavLink
+                                        disabled={nextAble}
                                         className={classnames({ active: currentIndexPart === index})}
-                                        onClick={() => this.toggle(index)}
+                                        onClick={() => this.toggle(index, item)}
                                     >Theory</NavLink>
                                     </NavItem>
                                 );
@@ -128,12 +184,6 @@ class Lession extends Component {
                     <TabContent activeTab={currentIndexPart}>
                         {currentFirstPart.type !== true ? this.renderDocContent(currentFirstPart) : this.renderQuizContent(currentFirstPart)}
                     </TabContent>
-                    {/* <Button
-                        color="success"
-                        onClick={() => this.nextPart()}
-                    >
-                        next
-                    </Button> */}
                     <span
                         className="backBtn"
                         onClick={() => this.backPart()}
@@ -154,7 +204,8 @@ class Lession extends Component {
   }
 }
 
-function mapStateToProps({courseActives}, ownProps) {
+function mapStateToProps(state, ownProps) {
+    const {courseActives, histories, user} = state;
     const {courseID, moduleID, lessionID} = ownProps.match.params;
     const currentCourse = courseActives.find((c) => c.id == courseID);
     const currentModule = currentCourse.modules.find((m) => m.id == moduleID);
@@ -163,7 +214,10 @@ function mapStateToProps({courseActives}, ownProps) {
     return {
         currentModule,
         // currentLession,
+        histories,
+        user,
         lessionID,
+        courseID,
     };
   }
 
@@ -171,6 +225,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getPartByLessionID,
         getLessionByID,
+        updateHistory,
     }, dispatch);
 }
 

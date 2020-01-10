@@ -33,7 +33,7 @@ class Quiz extends Component {
     }
 
     submit = async () => {
-        const {question} = this.props;
+        const {question, item} = this.props;
         try {
             let answers = [];
             answers.push(this.state.answer);
@@ -43,6 +43,7 @@ class Quiz extends Component {
                     this.setState({
                         correct: true,
                     });
+                    this.props.passQuiz(item);
                 } else {
                     this.setState({
                         incorrect: true,
