@@ -64,6 +64,18 @@ class Lession extends Component {
       }
   }
 
+  backPart = () => {
+    const {currentIndexPart} = this.state;
+    if (currentIndexPart > 0) {
+      this.setState({currentIndexPart: currentIndexPart-1});
+    }
+  }
+
+  backToListLession = () => {
+    const {courseID} = this.props.match.params;
+    this.props.history.push(`/course/${courseID}`);
+  }
+
   render() {
     const {currentModule} = this.props;
     const {currentIndexPart, currentPart, currentLession} = this.state;
@@ -123,14 +135,16 @@ class Lession extends Component {
                         next
                     </Button> */}
                     <span
+                        className="backBtn"
+                        onClick={() => this.backPart()}
+                    ><i className="cui-arrow-left icons font-2xl d-block mt-4"></i></span>
+                    <span
                         className="nextBtn"
                         onClick={() => this.nextPart()}
                     ><i className="cui-arrow-right icons font-2xl d-block mt-4"></i></span>
                     <span
-                        className="backBtn"
-                        onClick={() => this.nextPart()}
-                    ><i className="cui-arrow-left icons font-2xl d-block mt-4"></i></span>
-                    <span><i className="cui-chevron-left icons font-2xl d-block mt-4"></i></span>
+                        onClick={() => this.backToListLession()}
+                    ><i className="cui-chevron-left icons font-2xl d-block mt-4"></i></span>
                 </Col>
                 <Col>
                 </Col>
