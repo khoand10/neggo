@@ -7,7 +7,8 @@ const Course = React.lazy(() => import('./views/Managers/CourseDetail/CourseDeta
 const memberRoutes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Home },
-  { path: '/members', name: 'Members', component: Member },
+  // { path: '/members', name: 'Members', component: Member },
+  { path: '/members/:userID', name: 'Members', component: Member },
   { path: '/course/:courseID', name: 'Course Creator', component: Course },
 ];
 

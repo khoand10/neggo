@@ -70,10 +70,14 @@ class Lession extends Component {
 
   passQuiz = (item) => {
     const {user, histories, courseID, currentModule, lessionID} = this.props;
+    const {currentPart} = this.state;
     const newHistory = {...histories};
     const passSlot = histories[courseID][currentModule.id][lessionID]['passSlot'];
     if (passSlot < item.slot) {
-        newHistory[courseID][currentModule.id][lessionID]['passSlot'] = item.slot;
+        newHistory[courseID][currentModule.id][lessionID] = {
+            passSlot: item.slot,
+            status: item.slot === currentPart.length ? "done" : "",
+        }
     const newData = {
         userID: user.id,
         history: JSON.stringify(newHistory),
@@ -83,7 +87,7 @@ class Lession extends Component {
   }
 
   toggle = (tab, item) => {
-      const {currentIndexPart} = this.state;
+      const {currentIndexPart, currentPart} = this.state;
       if(currentIndexPart !== tab) {
           this.setState({currentIndexPart: tab});
           if (item.type !== true) {
@@ -91,7 +95,10 @@ class Lession extends Component {
               const newHistory = {...histories};
               const passSlot = histories[courseID][currentModule.id][lessionID]['passSlot'];
               if (passSlot < item.slot) {
-                newHistory[courseID][currentModule.id][lessionID]['passSlot'] = item.slot;
+                newHistory[courseID][currentModule.id][lessionID] = {
+                    passSlot: item.slot,
+                    status: item.slot === currentPart.length ? "done" : "",
+                }
                 const newData = {
                     userID: user.id,
                     history: JSON.stringify(newHistory),

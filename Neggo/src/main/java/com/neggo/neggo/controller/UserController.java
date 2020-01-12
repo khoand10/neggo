@@ -42,6 +42,33 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @RequestMapping(value = "", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserForm userForm) {
+        Role role = roleRepository.findByRole(userForm.getRole());
+        User user = new User();
+        user.setId(userForm.getId());
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setRole(role);
+        boolean exists = userRepository.existsEmail(user.getEmail());
+        if (exists) {
+            Optional<User> userExists = userRepository.findById(user.getId());
+            if (!userExists.get().getEmail().equals(user.getEmail())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiError("Email already exist"));
+            }
+        }
+        userRepository.save(user);
+        return ResponseEntity.ok(user);
+    }
+
+    @RequestMapping(value = "/{userID}", method = RequestMethod.DELETE)
+    public ResponseEntity<ApiError> deleteUser(@PathVariable(value = "userID") Long id) {
+        User user = userRepository.getOne(id);
+        userRepository.delete(user);
+        return new ResponseEntity<>(new ApiError("success"), HttpStatus.OK);
+    }
+
     @RequestMapping("/{userID}")
     public ResponseEntity<Object> getUser(@PathVariable(value = "userID") Long id) {
         Optional<User> user = userRepository.findById(id);

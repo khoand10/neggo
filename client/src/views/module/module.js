@@ -37,7 +37,7 @@ class Module extends Component {
             }
         } else {
             const newL = {[lessionID]: {}}
-            newHistory[courseID][moduleID] = {...newHistory[courseID][moduleID], newL}
+            newHistory[courseID][moduleID] = {...newHistory[courseID][moduleID], ...newL}
         }
         const newData = {
             userID: user.id,

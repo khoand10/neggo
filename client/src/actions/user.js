@@ -12,6 +12,13 @@ export const createUser = (newUser) => {
     }
 }
 
+export const updateUser = (newUser) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.put(`${API}/api/users`, newUser);
+        return rs;
+    }
+}
+
 export const getAllUser = () => {
     return async (dispatch, getState) => {
         const rs = await axios.get(`${API}/api/users`);
@@ -21,6 +28,13 @@ export const getAllUser = () => {
                 payload: rs.data,
             });
         }
+        return rs;
+    }
+}
+
+export const deleteUser = (userID) => {
+    return async (dispatch, getState) => {
+        const rs = await axios.delete(`${API}/api/users/${userID}`);
         return rs;
     }
 }

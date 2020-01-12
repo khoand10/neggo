@@ -58,6 +58,7 @@ class Quiz extends Component {
                 incorrect: true,
             });
         } catch (error) {
+            console.log('errror ', error);
             this.setState({
                 incorrect: true,
             });
