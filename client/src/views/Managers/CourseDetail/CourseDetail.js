@@ -245,28 +245,26 @@ class CourseDetail extends Component {
                 <Button color="secondary" onClick={() => this.closeModal()}>Cancel</Button>
             </ModalFooter>
           </Modal>
-          <Row>
-            <Col>
-              <Label for="status">Status</Label>
-              <CustomInput onChange={this.handleChange} value={true} type="switch" id="exampleCustomSwitch" name="customSwitch"/>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button
-                color="info"
-                onClick={() => this.createModule()}
-              >
-                {'New Module'}
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
-            </Col>
-          </Row>
-          {currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
+         {this.props.match.params.courseID != "new-course" ? 
+          <React.Fragment>
+            <Row>
+                <Col>
+                  <Button
+                    color="info"
+                    onClick={() => this.createModule()}
+                  >
+                    {'New Module'}
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
+                </Col>
+              </Row>
+            </React.Fragment> : null}
+         
+          {this.props.match.params.courseID != "new-course" && currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
             <Row>
               <Col>
                   <Button
@@ -327,12 +325,16 @@ class CourseDetail extends Component {
               Create course fail!
             </div> : null
           }
+          <Row>
+            <Col>
           <Button
             onClick={() => this.createCourse()}
             color="primary"
           >
             {'Save'}
           </Button>
+            </Col>
+          </Row>
         </Form>
       </React.Fragment>
     );

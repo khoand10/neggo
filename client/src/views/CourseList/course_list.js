@@ -5,15 +5,27 @@ import { withRouter } from "react-router-dom";
 
 import {updateHistory} from '../../actions/history';
 
-import {Card, CardBody, CardFooter, CardHeader, Col, Row, Button, Badge, CardText, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
+import {FormGroup, Input, Card, CardBody, CardFooter, CardHeader, Col, Row, Button, Badge, CardText, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      filter: '',
+    }
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(event) {
+    const target = event.target;
+    this.setState({filter: target.value});
+  }
 
   getTotalLession = (module) => {
     let totalLession = 0;
     for (let i = 0; i < module.length; i++) {
       const element = module[i];
-      totalLession += element.lessions.length;      
+      totalLession += element.lessions.length;     
     }
     return totalLession;
   }
@@ -42,9 +54,14 @@ class Home extends Component {
 
   render() {
     const {course} = this.props;
+    const courseDisplay = course.filter((item) => item.name.toLowerCase().includes(this.state.filter.toLowerCase()))
     return (
+      <div>
+        <FormGroup>
+            <Input onChange={this.handleSearch} type="text" name="search" id="search" placeholder="search" value={this.state.filter} />
+        </FormGroup>
         <Row>
-            {course ? course.map((item, id) => {
+            {courseDisplay ? courseDisplay.map((item, id) => {
                 // const totalLession = this.getTotalLession(item.modules);
                 const totalLession = 10;
                 return (
@@ -83,6 +100,7 @@ class Home extends Component {
                 })
             : (null)}
         </Row>
+      </div>
     );
   }
 }

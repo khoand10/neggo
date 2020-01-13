@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Switch from "react-switch";
 
-import {Table, Button} from 'reactstrap';
+import {Table, Button, Row, Col, Input, Form, FormGroup} from 'reactstrap';
 
 import {updateStatusActive} from '../../../actions/course';
 import {getAllQuestion} from '../../../actions/question';
@@ -12,7 +12,21 @@ import {getAllQuestion} from '../../../actions/question';
 class Home extends Component {
   constructor() {
     super();
-    // this.handleChangeSwitch = this.handleChangeSwitch.bind(this);
+    this.state = {
+      filter: {text: '', property: 'all'},
+    }
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleChangeFilterProperty = this.handleChangeFilterProperty.bind(this);
+  }
+
+  handleSearch(event) {
+    const target = event.target;
+    this.setState({filter: {...this.state.filter, text: target.value}, activePage: 1});
+  }
+
+  handleChangeFilterProperty(event) {
+    const target = event.target;
+    this.setState({filter: {...this.state.filter, property: target.value}, activePage: 1});
   }
 
   componentWillMount() {
@@ -36,15 +50,35 @@ class Home extends Component {
 
   render() {
     const {course} = this.props;
+    const {filter} = this.state;
+    let courseDisplay;
+    if (filter.property == "all") {
+      courseDisplay = course.filter((item) => item.name.toLowerCase().includes(filter.text.toLowerCase()));
+    } else {
+      courseDisplay = course.filter((item) => item.active == (filter.property == "active") && item.name.toLowerCase().includes(filter.text.toLowerCase()));
+    }
     return (
       <div>
-        <Button
-          color="primary"
-          onClick={() => this.props.history.push(`/course/new-course`)}
-        >New Course</Button>
-        <br/>
-        ----
-        <br/>
+        <FormGroup>
+          <Button
+            color="primary"
+            onClick={() => this.props.history.push(`/course/new-course`)}
+          >New Course</Button>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col sm={6}>
+              <Input onChange={this.handleSearch} type="text" name="search" id="search" placeholder="search" value={filter.text} />
+            </Col>
+            <Col sm={3}>
+              <Input onChange={this.handleChangeFilterProperty} type="select" name="property" id="property" value={filter.property}>
+                <option value='all'>{'All'}</option>
+                <option value='active'>{'Active'}</option>
+                <option value='inActive'>{'InActive'}</option>
+              </Input>
+            </Col>
+          </Row>
+        </FormGroup>
         <Table hover bordered>
           <thead>
             <tr>
@@ -55,7 +89,7 @@ class Home extends Component {
             </tr>
           </thead>
           <tbody>
-            {course ? course.map((item, index) => {
+            {courseDisplay ? courseDisplay.map((item, index) => {
               return (
                 <tr>
                   <th scope="row">{index + 1}</th>

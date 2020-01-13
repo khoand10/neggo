@@ -129,7 +129,7 @@ class Member extends Component {
   renderListUser() {
     const listUser = this.props.users;
     const {filter} = this.state;
-    const users = listUser.filter((user) => user[filter.property].toLowerCase().includes(filter.text.toLowerCase()))
+    const users = listUser.filter((user) => user[filter.property].toLowerCase().includes(filter.text.toLowerCase()));
     const {activePage} = this.state;
     let pagination;
     let listIndex = [];
