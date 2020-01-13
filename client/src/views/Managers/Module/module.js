@@ -237,7 +237,7 @@ class Module extends Component {
   render() {
     return (
       <div>
-        {!this.state.detailLession ? this.renderLession() : <Lession lession={this.state.detailLession}/>}
+        {!this.state.detailLession ? this.renderLession() : <Lession back={() => this.setState({detailLession: null})} lession={this.state.detailLession}/>}
       </div>
     );
   }

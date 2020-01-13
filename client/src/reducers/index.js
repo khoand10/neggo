@@ -6,6 +6,7 @@ import user from "./login";
 import somedata from "./somedata";
 import course from "./course";
 import users from "./user";
+import questions from './question';
 
 import {SET_HISTORY, COURSE_ACTIVE_GET_ALL} from '../actions/action_types';
 
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
     histories,
     users,
     courseActives,
+    questions,
 });
 
 export default rootReducer;

@@ -6,6 +6,8 @@ import com.neggo.neggo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
@@ -20,5 +22,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question findByID(long id) {
         return questionRepository.findByQuestionID(id);
+    }
+
+    @Override
+    public List<Question> getAll() {
+        return questionRepository.findAll();
     }
 }

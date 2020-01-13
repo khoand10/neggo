@@ -1,4 +1,4 @@
-export const API = "http://localhost:8080";
+export const API = "http://localhost:8082";
 export const USER_LOGGED_IN = "USER_LOGGED_IN";
 export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
 
@@ -15,6 +15,10 @@ export const COURSE_ACTIVE_GET_ALL = "COURSE_ACTIVE_GET_ALL";
 export const MODULE_CREATE = "MODULE_CREATE";
 export const MODULE_DELETE = "MODULE_DELETE";
 export const MODULE_UPDATE = "MODULE_UPDATE";
+
+//question
+export const QUESTION_GET_ALL = "QUESTION_GET_ALL";
+export const QUESTION_CREATE = "QUESTION_CREATE";
 
 export const SET_HISTORY = "SET_HISTORY";
 export const UPDATE_HISTORY = "UPDATE_HISTORY";

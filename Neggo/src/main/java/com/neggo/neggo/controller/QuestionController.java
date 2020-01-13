@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/questions")
@@ -22,6 +23,12 @@ public class QuestionController {
     private QuestionService questionService;
     @Autowired
     private PartService partService;
+
+    @RequestMapping
+    public ResponseEntity<List<Question>> listLession() {
+        List<Question> questions = questionService.getAll();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<AnswerResponse> handleSubmit(@PathVariable Long id, @RequestBody SubmitForm submitForm) {

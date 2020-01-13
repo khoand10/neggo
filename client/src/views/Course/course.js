@@ -25,7 +25,8 @@ class Course extends Component {
               </Col>
               <Col sm={9}>
                 <h3>{currentCourse.name}</h3>
-                <Markdown source={currentCourse.courseInfo} />
+                {/* <Markdown source={currentCourse.courseInfo} /> */}
+                <EditorPreview data={currentCourse.courseInfo} />
               </Col>
             </Row>
             <Row className="list-lession">
@@ -95,3 +96,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(Course));
+
+class EditorPreview extends Component {
+  render() {
+      return (
+          <div className="editor-preview">
+              <div dangerouslySetInnerHTML={ { __html: this.props.data } }></div>
+          </div>
+      );
+  }
+}
+
+EditorPreview.defaultProps = {
+  data: ''
+};

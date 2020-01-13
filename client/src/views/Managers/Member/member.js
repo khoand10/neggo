@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {Form, Label, Input, Button, Table, FormGroup, Pagination, PaginationItem, PaginationLink
+import {Form, Label, Input, Button, Table, FormGroup, Pagination, PaginationItem, PaginationLink, Row, Col
 } from 'reactstrap';
 
 import { confirmAlert } from 'react-confirm-alert';
@@ -20,8 +20,11 @@ class Member extends Component {
       password: '',
       error: false,
       activePage: 1,
+      filter: {text: '', property: 'name'},
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleChangeFilterProperty = this.handleChangeFilterProperty.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -45,6 +48,16 @@ class Member extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleSearch(event) {
+    const target = event.target;
+    this.setState({filter: {...this.state.filter, text: target.value}, activePage: 1});
+  }
+
+  handleChangeFilterProperty(event) {
+    const target = event.target;
+    this.setState({filter: {...this.state.filter, property: target.value}, activePage: 1});
   }
 
   onFormSubmit = e => {
@@ -114,7 +127,9 @@ class Member extends Component {
   }
 
   renderListUser() {
-    const {users} = this.props;
+    const listUser = this.props.users;
+    const {filter} = this.state;
+    const users = listUser.filter((user) => user[filter.property].toLowerCase().includes(filter.text.toLowerCase()))
     const {activePage} = this.state;
     let pagination;
     let listIndex = [];
@@ -158,10 +173,21 @@ class Member extends Component {
 
     return (
       <div>
-        <Button
+        {/* <Button
           color="primary"
           onClick={() => this.props.history.push(`/course/new-course`)}
-        >New User</Button>
+        >New User</Button> */}
+        <Row>
+          <Col sm={8}>
+            <Input onChange={this.handleSearch} type="text" name="search" id="search" placeholder="search" value={filter.text} />
+          </Col>
+          <Col sm={4}>
+            <Input onChange={this.handleChangeFilterProperty} type="select" name="property" id="property" value={filter.property}>
+              <option value='name'>{'Name'}</option>
+              <option value='email'>{'Email'}</option>
+            </Input>
+          </Col>
+        </Row>
         <Table hover bordered>
           <thead>
             <tr>

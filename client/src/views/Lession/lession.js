@@ -57,7 +57,8 @@ class Lession extends Component {
     return (
         <React.Fragment>
             <h5>{currentPart ? currentPart.name : ''}</h5>
-            <Markdown source={currentPart ? currentPart.content : ''} />
+            {/* <Markdown source={currentPart ? currentPart.content : ''} /> */}
+            <EditorPreview data={currentPart ? currentPart.content : ''} />
         </React.Fragment>
     )
   }
@@ -237,3 +238,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(Lession));
+
+class EditorPreview extends Component {
+    render() {
+        return (
+            <div className="editor-preview">
+                <div dangerouslySetInnerHTML={ { __html: this.props.data } }></div>
+            </div>
+        );
+    }
+  }
+  
+  EditorPreview.defaultProps = {
+    data: ''
+  };

@@ -9,13 +9,13 @@ import {Form, Row, Col, Label, Input, CustomInput, Button, Table, Collapse, Card
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
+import CKEditor from 'ckeditor4-react';
+
 import {createCourse, createModule, deleteModule, updateModule} from '../../../actions/course';
 
 import {compare} from '../../../utils/helper';
 
 import Module from '../Module/module';
-
-const Markdown = require('react-markdown');
 class CourseDetail extends Component {
 
   constructor() {
@@ -38,6 +38,8 @@ class CourseDetail extends Component {
       modal: false,
     }
     this.handleChange = this.handleChange.bind(this);
+    this.onChangeDes = this.onChangeDes.bind(this);
+    this.onChangeCourseInfo = this.onChangeCourseInfo.bind(this);
   }
 
   handleChange(event) {
@@ -48,6 +50,20 @@ class CourseDetail extends Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  onChangeDes(evt){
+    var newContent = evt.editor.getData();
+    this.setState({
+      description: newContent
+    })
+  }
+
+  onChangeCourseInfo(evt){
+    var newContent = evt.editor.getData();
+    this.setState({
+      courseInfo: newContent
+    })
   }
 
   componentWillMount() {
@@ -185,30 +201,29 @@ class CourseDetail extends Component {
           <Row>
             <Col>
               <Label for="description">Description</Label>
+              {this.state.desViewMD ? 
+                <EditorPreview data={this.state.description} /> : 
+                <CKEditor onChange={this.onChangeDes} name="description" data={this.state.description} />
+              }
               <span
                 onClick={() => this.setState({desViewMD: !this.state.desViewMD})}
               >
-                <i className="cui-code icons font-2xl d-block mt-2"></i>
+                <i className="cui-bookmark icons font-2xl d-block mt-4"></i>
               </span>
-              {this.state.desViewMD ? 
-                <Markdown source={this.state.description}/> : 
-                <Input onChange={this.handleChange} type="textarea" name="description" id="description" placeholder="course description" value={this.state.description} />
-              }
               </Col>
           </Row>
           <Row>
             <Col>
               <Label for="info">Info</Label>
+              {this.state.infoVIewMD ? 
+                <EditorPreview data={this.state.courseInfo} /> : 
+                <CKEditor isScriptLoaded={true} onChange={this.onChangeCourseInfo} name="courseInfo" data={this.state.courseInfo} />
+              }
               <span
                 onClick={() => this.setState({infoVIewMD: !this.state.infoVIewMD})}
               >
-                <i className="cui-code icons font-2xl d-block mt-2"></i>
+                <i className="cui-bookmark icons font-2xl d-block mt-4"></i>
               </span>
-              {this.state.infoVIewMD ? 
-                <Markdown source={this.state.courseInfo}/> : 
-                <Input onChange={this.handleChange} type="textarea" name="courseInfo" id="courseInfo" placeholder="course info" value={this.state.courseInfo} />
-              }
-              
             </Col>
           </Row>
           <Row>
@@ -236,13 +251,21 @@ class CourseDetail extends Component {
               <CustomInput onChange={this.handleChange} value={true} type="switch" id="exampleCustomSwitch" name="customSwitch"/>
             </Col>
           </Row>
-          <Button
-            color="info"
-            onClick={() => this.createModule()}
-          >
-            {'New Module'}
-          </Button>
-          <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
+          <Row>
+            <Col>
+              <Button
+                color="info"
+                onClick={() => this.createModule()}
+              >
+                {'New Module'}
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Input onChange={this.handleChange} type="text" name="newModuleName" id="modulename" placeholder="module name" value={this.state.newModuleName} />
+            </Col>
+          </Row>
           {currentCourse && currentCourse.modules && currentCourse.modules.length > 0 ?
             <Row>
               <Col>
@@ -253,7 +276,7 @@ class CourseDetail extends Component {
                     size="lg"
                     block={true}
                     outline={true}
-                  >{'Modules of course'}</Button>
+                  >{'Modules of this course'}</Button>
                   <Collapse isOpen={this.state.isOpen}>
                     <Card>
                       <CardBody>
@@ -346,3 +369,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default (connect(mapStateToProps, mapDispatchToProps)(CourseDetail));
+
+class EditorPreview extends Component {
+  render() {
+      return (
+          <div className="editor-preview">
+              <h2>Rendered content</h2>
+              <div dangerouslySetInnerHTML={ { __html: this.props.data } }></div>
+          </div>
+      );
+  }
+}
+
+EditorPreview.defaultProps = {
+  data: ''
+};

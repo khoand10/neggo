@@ -7,11 +7,18 @@ import Switch from "react-switch";
 import {Table, Button} from 'reactstrap';
 
 import {updateStatusActive} from '../../../actions/course';
+import {getAllQuestion} from '../../../actions/question';
 
 class Home extends Component {
   constructor() {
     super();
     // this.handleChangeSwitch = this.handleChangeSwitch.bind(this);
+  }
+
+  componentWillMount() {
+    if (!this.props.questions) {
+      this.props.getAllQuestion();
+    }
   }
  
   handleChangeSwitch = (id, checked) => {
@@ -71,7 +78,7 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({course}) {
+function mapStateToProps({course, questions}) {
   return {
     course
   };
@@ -80,6 +87,7 @@ function mapStateToProps({course}) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     updateStatusActive,
+    getAllQuestion,
   }, dispatch);
 }
 
