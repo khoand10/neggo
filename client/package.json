@@ -17,7 +17,7 @@
     "@coreui/icons": "^0.3.0",
     "@coreui/react": "^2.5.1",
     "ace-builds": "^1.4.7",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "ckeditor4-react": "^1.0.1",
